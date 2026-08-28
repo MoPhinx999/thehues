@@ -6,41 +6,45 @@
 <meta name="theme-color" content="#f5f6f8">
 <title>TheHues 单月经营模型</title>
 <style>
-:root{--bg:#f5f6f8;--card:#fff;--text:#101828;--muted:#667085;--line:#e4e7ec;--soft:#f8fafc;--good:#067647;--bad:#b42318;--accent:#111827}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif}body{padding-bottom:max(28px,env(safe-area-inset-bottom))}
-.shell{max-width:1380px;margin:auto;padding:24px}.head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:16px}.head h1{font-size:28px;margin:0 0 5px;letter-spacing:-.03em}.head p{margin:0;color:var(--muted);font-size:13px}.tag{font-size:12px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 10px;color:var(--muted);white-space:nowrap}
-.layout{display:grid;grid-template-columns:minmax(430px,.82fr) minmax(560px,1.18fr);gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;box-shadow:0 1px 2px rgba(16,24,40,.03)}.section{padding:16px}.section+.section{border-top:1px solid var(--line)}.title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.title h2{margin:0;font-size:15px}.title small{font-size:10px;color:#98a2b3}
-.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}.control{padding:12px;border:1px solid var(--line);border-radius:13px;background:#fff}.control.wide{grid-column:1/-1}.control-top{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-bottom:8px}.label{font-size:12px;font-weight:700}.valuebox{display:flex;align-items:center;gap:4px}.valuebox input{width:92px;text-align:right;border:0;background:transparent;font-size:17px;font-weight:800;color:var(--text);outline:0}.unit{font-size:11px;color:var(--muted)}
+:root{--bg:#f5f6f8;--card:#fff;--text:#101828;--muted:#667085;--line:#e4e7ec;--soft:#f8fafc;--good:#067647;--bad:#b42318}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif}
+body{padding-bottom:max(28px,env(safe-area-inset-bottom))}
+.shell{max-width:1380px;margin:auto;padding:24px}
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:16px}
+.head h1{margin:0 0 4px;font-size:28px;letter-spacing:-.03em}.head p{margin:0;color:var(--muted);font-size:13px}.tag{font-size:12px;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 10px;white-space:nowrap}
+.layout{display:grid;grid-template-columns:minmax(430px,.82fr) minmax(580px,1.18fr);gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:17px;box-shadow:0 1px 2px rgba(16,24,40,.03)}.section{padding:16px}.section+.section{border-top:1px solid var(--line)}
+.title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}.title h2{font-size:15px;margin:0}.title small{font-size:10px;color:#98a2b3}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}.control{padding:12px;border:1px solid var(--line);border-radius:13px}.control.wide{grid-column:1/-1}.control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}.label{font-size:12px;font-weight:700}.valuebox{display:flex;align-items:center;gap:4px}.valuebox input{width:92px;text-align:right;border:0;background:transparent;font-size:17px;font-weight:800;outline:0;color:var(--text)}.unit{font-size:11px;color:var(--muted)}
 input[type=range]{width:100%;height:28px;margin:0;appearance:none;background:transparent;touch-action:pan-y}input[type=range]::-webkit-slider-runnable-track{height:7px;border-radius:999px;background:#e8ebf0}input[type=range]::-webkit-slider-thumb{appearance:none;width:24px;height:24px;border-radius:50%;background:#111827;border:4px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.2);margin-top:-8.5px}input[type=range]::-moz-range-track{height:7px;border-radius:999px;background:#e8ebf0}input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#111827;border:4px solid #fff}.ends{display:flex;justify-content:space-between;font-size:9px;color:#98a2b3;margin-top:1px}.helper{font-size:10px;line-height:1.45;color:#98a2b3;margin-top:6px}
-.hero{padding:17px}.hero-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.kpi{border:1px solid var(--line);border-radius:14px;padding:13px;min-height:101px}.kpi .n{font-size:10px;color:var(--muted);margin-bottom:7px}.kpi .v{font-size:22px;font-weight:850;letter-spacing:-.03em}.kpi .s{font-size:10px;color:#98a2b3;margin-top:5px;line-height:1.4}.positive{color:var(--good)}.negative{color:var(--bad)}
+.hero{padding:17px}.hero-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.kpi{border:1px solid var(--line);border-radius:14px;padding:13px;min-height:98px}.kpi .n{font-size:10px;color:var(--muted);margin-bottom:7px}.kpi .v{font-size:22px;font-weight:850;letter-spacing:-.03em}.kpi .s{font-size:10px;color:#98a2b3;margin-top:5px;line-height:1.4}.positive{color:var(--good)}.negative{color:var(--bad)}
 .status{margin-top:10px;border-radius:12px;padding:11px 12px;font-size:12px;font-weight:700;line-height:1.45}.formula{margin-top:9px;padding:10px 11px;background:var(--soft);border:1px dashed #d0d5dd;border-radius:12px;font-size:11px;line-height:1.65;color:#475467}
-.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.step{border:1px solid var(--line);border-radius:12px;padding:10px;position:relative}.step:not(:last-child):after{content:'→';position:absolute;right:-9px;top:50%;transform:translateY(-50%);font-size:14px;color:#98a2b3;z-index:2}.step .n{font-size:9px;color:var(--muted);margin-bottom:4px}.step .v{font-size:16px;font-weight:800}.step .s{font-size:9px;color:#98a2b3;margin-top:3px}
-.breakdown{display:grid;grid-template-columns:1fr 1fr;gap:9px}.metric{border:1px solid var(--line);border-radius:12px;padding:11px}.metric .n{font-size:10px;color:var(--muted);margin-bottom:5px}.metric .v{font-size:17px;font-weight:800}.metric .s{font-size:9px;color:#98a2b3;margin-top:4px}.rows{display:grid;gap:8px}.row{display:flex;justify-content:space-between;gap:12px;font-size:12px}.row span{color:var(--muted)}.row b{text-align:right}
-.chartbox{height:300px;position:relative;overflow:hidden;border-radius:12px}.chartbox canvas{display:block;width:100%;height:300px;touch-action:pan-y}.tip{position:absolute;display:none;pointer-events:none;background:#101828;color:#fff;border-radius:8px;padding:7px 9px;font-size:10px;line-height:1.45;white-space:nowrap}.note{font-size:10px;color:#98a2b3;line-height:1.5;margin-top:7px}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.step{border:1px solid var(--line);border-radius:12px;padding:10px;position:relative}.step:not(:last-child):after{content:'→';position:absolute;right:-9px;top:50%;transform:translateY(-50%);font-size:14px;color:#98a2b3}.step .n{font-size:9px;color:var(--muted);margin-bottom:4px}.step .v{font-size:16px;font-weight:800}.step .s{font-size:9px;color:#98a2b3;margin-top:3px}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:9px}.metric{border:1px solid var(--line);border-radius:12px;padding:11px}.metric .n{font-size:10px;color:var(--muted);margin-bottom:5px}.metric .v{font-size:17px;font-weight:800}.metric .s{font-size:9px;color:#98a2b3;margin-top:4px;line-height:1.4}.rows{display:grid;gap:8px}.row{display:flex;justify-content:space-between;gap:12px;font-size:12px}.row span{color:var(--muted)}.row b{text-align:right}
+.chartbox{height:300px;position:relative;overflow:hidden;border-radius:12px}.chartbox canvas{display:block;width:100%;height:300px;touch-action:pan-y}.tip{position:absolute;display:none;pointer-events:none;background:#101828;color:#fff;border-radius:8px;padding:7px 9px;font-size:10px;line-height:1.45;white-space:nowrap}.note,.footer{font-size:10px;color:#98a2b3;line-height:1.5}.note{margin-top:7px}.footer{margin-top:12px}
 details{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}summary{list-style:none;cursor:pointer;font-size:11px;font-weight:700}summary::-webkit-details-marker{display:none}.adv{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.field{border:1px solid var(--line);border-radius:11px;padding:9px}.field label{display:block;font-size:9px;color:var(--muted);margin-bottom:4px}.field input{width:100%;border:0;outline:0;background:transparent;font-size:15px;font-weight:800;color:var(--text)}
-.footer{font-size:10px;color:#98a2b3;line-height:1.55;margin-top:12px}
 @media(max-width:980px){.shell{max-width:760px;padding:18px 14px}.layout{grid-template-columns:1fr}.head{align-items:flex-start}.tag{display:none}.hero-grid{grid-template-columns:1fr 1fr}.flow{grid-template-columns:1fr 1fr}.step:not(:last-child):after{display:none}.chartbox,.chartbox canvas{height:250px}}
-@media(max-width:520px){.shell{padding:14px 10px}.head h1{font-size:23px}.controls,.breakdown,.adv{grid-template-columns:1fr}.control.wide{grid-column:auto}.hero-grid{grid-template-columns:1fr 1fr;gap:8px}.kpi{padding:11px;min-height:94px}.kpi .v{font-size:19px}.flow{grid-template-columns:1fr}.valuebox input{width:84px}.section,.hero{padding:13px}}
+@media(max-width:520px){.shell{padding:14px 10px}.head h1{font-size:23px}.controls,.metrics,.adv{grid-template-columns:1fr}.control.wide{grid-column:auto}.hero-grid{grid-template-columns:1fr 1fr;gap:8px}.kpi{padding:11px;min-height:92px}.kpi .v{font-size:19px}.flow{grid-template-columns:1fr}.valuebox input{width:84px}.section,.hero{padding:13px}}
 </style>
 </head>
 <body>
 <main class="shell">
-<header class="head"><div><h1>TheHues 单月经营模型</h1><p>只看一个月。改任意核心变量，销售额、成本、营销和利润即时联动。</p></div><div class="tag">核心口径：净销售额</div></header>
+<header class="head"><div><h1>TheHues 单月经营模型</h1><p>只看一个月。调整销售、成本和营销变量，结果即时联动。</p></div><div class="tag">核心口径：净销售额</div></header>
 <div class="layout">
 <div class="card">
 <section class="section">
 <div class="title"><h2>1. 销售驱动</h2><small>Sessions × CVR × AOV</small></div>
 <div class="controls">
-<div class="control wide"><div class="control-top"><span class="label">月净销售额</span><div class="valuebox"><span class="unit">$</span><input id="salesN" type="number" min="10000" max="1000000" step="1000"><span class="unit">USD</span></div></div><input id="salesR" type="range" min="10000" max="1000000" step="1000"><div class="ends"><span>$10k</span><span>$1m</span></div><div class="helper">直接改销售额时，系统反推需要的 Sessions。</div></div>
+<div class="control wide"><div class="control-top"><span class="label">月净销售额</span><div class="valuebox"><span class="unit">$</span><input id="salesN" type="number" min="10000" max="1000000" step="1000"><span class="unit">USD</span></div></div><input id="salesR" type="range" min="10000" max="1000000" step="1000"><div class="ends"><span>$10k</span><span>$1m</span></div><div class="helper">直接改销售额时，系统按当前 CVR / AOV / 退款率反推 Sessions。</div></div>
 <div class="control"><div class="control-top"><span class="label">Sessions</span><div class="valuebox"><input id="sessionsN" type="number" min="1000" max="1000000" step="100"><span class="unit">次</span></div></div><input id="sessionsR" type="range" min="1000" max="300000" step="100"><div class="ends"><span>1k</span><span>300k</span></div></div>
 <div class="control"><div class="control-top"><span class="label">整站转化率</span><div class="valuebox"><input id="cvrN" type="number" min="0.01" max="10" step="0.0001"><span class="unit">%</span></div></div><input id="cvrR" type="range" min="0.01" max="5" step="0.0001"><div class="ends"><span>0.01%</span><span>5%</span></div></div>
 <div class="control"><div class="control-top"><span class="label">AOV</span><div class="valuebox"><span class="unit">$</span><input id="aovN" type="number" min="20" max="2000" step="0.01"></div></div><input id="aovR" type="range" min="20" max="1000" step="0.01"><div class="ends"><span>$20</span><span>$1,000</span></div></div>
-<div class="control"><div class="control-top"><span class="label">退款 / 退货销售冲减</span><div class="valuebox"><input id="refundN" type="number" min="0" max="50" step="0.1"><span class="unit">%</span></div></div><input id="refundR" type="range" min="0" max="30" step="0.1"><div class="ends"><span>0%</span><span>30%</span></div><div class="helper">先冲减销售额，不当成售后成本。</div></div>
+<div class="control"><div class="control-top"><span class="label">退款 / 退货销售冲减</span><div class="valuebox"><input id="refundN" type="number" min="0" max="50" step="0.1"><span class="unit">%</span></div></div><input id="refundR" type="range" min="0" max="30" step="0.1"><div class="ends"><span>0%</span><span>30%</span></div><div class="helper">先冲减销售额，不重复作为售后成本。</div></div>
 </div>
-<details><summary>复购指标（参考，不重复增加 GMV） ▾</summary><div class="adv"><div class="field"><label>Returning customer rate</label><input id="repeatN" type="number" min="0" max="100" step="0.1" value="17"></div><div class="field"><label>说明</label><div style="font-size:10px;color:#667085;line-height:1.5">用于观察复购结构；当前不参与收入公式，避免和整站 CVR 重复计算。</div></div></div></details>
+<details><summary>复购指标（仅参考） ▾</summary><div class="adv"><div class="field"><label>Returning customer rate</label><input id="repeatN" type="number" min="0" max="100" step="0.1" value="17"></div><div class="field"><label>说明</label><div style="font-size:10px;color:#667085;line-height:1.5">整站 CVR 已包含新老客订单，因此复购率不额外增加收入。</div></div></div></details>
 </section>
 <section class="section">
-<div class="title"><h2>2. 变动成本</h2><small>全部按净销售额占比</small></div>
+<div class="title"><h2>2. 变动成本</h2><small>统一按净销售额占比</small></div>
 <div class="controls">
 <div class="control"><div class="control-top"><span class="label">产品成本率</span><div class="valuebox"><input id="productN" type="number" min="0" max="100" step="0.5"><span class="unit">%</span></div></div><input id="productR" type="range" min="0" max="80" step="0.5"></div>
 <div class="control"><div class="control-top"><span class="label">履约 / 物流成本率</span><div class="valuebox"><input id="fulfillN" type="number" min="0" max="100" step="0.5"><span class="unit">%</span></div></div><input id="fulfillR" type="range" min="0" max="40" step="0.5"></div>
@@ -57,7 +61,7 @@ details{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}summar
 <div class="control"><div class="control-top"><span class="label">联盟</span><div class="valuebox"><input id="affN" type="number" min="0" max="100" step="0.5"><span class="unit">%</span></div></div><input id="affR" type="range" min="0" max="30" step="0.5"></div>
 <div class="control"><div class="control-top"><span class="label">其他营销</span><div class="valuebox"><input id="otherMktN" type="number" min="0" max="100" step="0.5"><span class="unit">%</span></div></div><input id="otherMktR" type="range" min="0" max="30" step="0.5"></div>
 </div>
-<details><summary>高级设置 ▾</summary><div class="adv"><div class="field"><label>USD → RMB 汇率</label><input id="fxN" type="number" min="0.01" max="20" step="0.01" value="6.72"></div><div class="field"><label>所有费率基数</label><div style="font-size:10px;color:#667085;line-height:1.5">产品、履约、支付、售后和营销费率统一按净销售额计算。</div></div></div></details>
+<details><summary>高级设置 ▾</summary><div class="adv"><div class="field"><label>USD → RMB 汇率</label><input id="fxN" type="number" min="0.01" max="20" step="0.01" value="6.72"></div><div class="field"><label>统一口径</label><div style="font-size:10px;color:#667085;line-height:1.5">产品、履约、支付、售后和营销费率全部以净销售额为基数。</div></div></div></details>
 </section>
 </div>
 <div>
@@ -66,12 +70,12 @@ details{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}summar
 <div class="kpi"><div class="n">月净销售额</div><div class="v" id="salesOut">—</div><div class="s" id="salesRmbOut">—</div></div>
 <div class="kpi"><div class="n">经营利润</div><div class="v" id="profitOut">—</div><div class="s" id="profitUsdOut">—</div></div>
 <div class="kpi"><div class="n">经营利润率</div><div class="v" id="marginOut">—</div><div class="s">利润 ÷ 净销售额</div></div>
-<div class="kpi"><div class="n">盈亏平衡净销售额</div><div class="v" id="beSalesOut">—</div><div class="s">成本结构不变时</div></div>
+<div class="kpi"><div class="n">盈亏平衡净销售额</div><div class="v" id="beSalesOut">—</div><div class="s">费率结构不变时</div></div>
 </div>
 <div class="status" id="status"></div><div class="formula" id="formula"></div>
 </section>
 <section class="card section">
-<div class="title"><h2>单月销售链路</h2><small>复购不额外加收入</small></div>
+<div class="title"><h2>单月销售链路</h2><small>复购不重复加收入</small></div>
 <div class="flow">
 <div class="step"><div class="n">Sessions</div><div class="v" id="sessionsOut">—</div></div>
 <div class="step"><div class="n">× CVR</div><div class="v" id="cvrOut">—</div></div>
@@ -81,42 +85,179 @@ details{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}summar
 </div>
 </section>
 <section class="card section">
-<div class="title"><h2>关键经营线</h2><small>只保留真正有决策价值的指标</small></div>
-<div class="breakdown">
+<div class="title"><h2>关键经营线</h2><small>只保留决策相关指标</small></div>
+<div class="metrics">
 <div class="metric"><div class="n">产品毛利率</div><div class="v" id="grossOut">—</div><div class="s">1 − 产品成本率</div></div>
 <div class="metric"><div class="n">营销前贡献率</div><div class="v" id="preMktOut">—</div><div class="s">再扣履约 / 支付 / 售后</div></div>
 <div class="metric"><div class="n">总营销费比</div><div class="v" id="mktRateOut">—</div><div class="s" id="mktAmtOut">—</div></div>
-<div class="metric"><div class="n">盈亏平衡营销费比</div><div class="v" id="beMktOut">—</div><div class="s">当前销售额下再高即亏</div></div>
+<div class="metric"><div class="n">盈亏平衡营销费比</div><div class="v" id="beMktOut">—</div><div class="s">当前净销售额下的上限</div></div>
 <div class="metric"><div class="n">每单营销成本</div><div class="v" id="cpoOut">—</div><div class="s">总营销费用 ÷ 全部订单，不称 CAC</div></div>
-<div class="metric"><div class="n">Returning customer rate</div><div class="v" id="repeatOut">—</div><div class="s">仅参考，不参与 GMV 计算</div></div>
+<div class="metric"><div class="n">Returning customer rate</div><div class="v" id="repeatOut">—</div><div class="s">仅参考，不参与收入计算</div></div>
 </div>
 </section>
-<section class="card section">
-<div class="title"><h2>成本与利润拆解</h2><small>RMB</small></div><div class="rows" id="rows"></div>
-</section>
-<section class="card section">
-<div class="title"><h2>规模敏感性</h2><small>不是增长预测</small></div><div class="chartbox"><canvas id="chart"></canvas><div class="tip" id="tip"></div></div><div class="note">只回答一个问题：如果当前费率结构都不变，净销售额放大或缩小时，30 万等固定成本被摊薄后利润率怎样变化。现实中扩大投放可能改变 CVR、CAC 和营销效率。</div>
-</section>
-<div class="footer">口径说明：订单销售额 = Sessions × 整站 CVR × AOV；净销售额 = 订单销售额 − 退款/退货销售冲减。产品、履约、支付、售后和营销费用都以净销售额为统一基数。Returning customer rate 仅作为运营参考，不重复增加 GMV。若要算真正 CAC，需要另外输入“首次购买客户数”和明确的拉新支出。</div>
+<section class="card section"><div class="title"><h2>成本与利润拆解</h2><small>RMB</small></div><div class="rows" id="rows"></div></section>
+<section class="card section"><div class="title"><h2>规模敏感性</h2><small>不是增长预测</small></div><div class="chartbox"><canvas id="chart"></canvas><div class="tip" id="tip"></div></div><div class="note">假设当前各项费率都不变，仅观察净销售额变化后固定成本摊薄对利润率的影响。</div></section>
+<div class="footer">订单销售额 = Sessions × 整站 CVR × AOV；净销售额 = 订单销售额 × (1 − 退款/退货销售冲减率)。复购率仅参考，不重复增加 GMV。</div>
 </div>
 </div>
 </main>
 <script>
-const $=id=>document.getElementById(id),state={};let locked=false;
+'use strict';
+const $=id=>document.getElementById(id);
+const state={};
+let locked=false;
 const CFG={
- sales:{n:'salesN',r:'salesR',v:150000,min:10000,max:1000000},sessions:{n:'sessionsN',r:'sessionsR',v:77159,min:1000,max:1000000},cvr:{n:'cvrN',r:'cvrR',v:.4769,min:.01,max:10},aov:{n:'aovN',r:'aovR',v:410.55,min:20,max:2000},refund:{n:'refundN',r:'refundR',v:0,min:0,max:50},product:{n:'productN',r:'productR',v:40,min:0,max:100},fulfill:{n:'fulfillN',r:'fulfillR',v:0,min:0,max:100},payment:{n:'paymentN',r:'paymentR',v:0,min:0,max:100},aftersales:{n:'aftersalesN',r:'aftersalesR',v:0,min:0,max:100},fixed:{n:'fixedN',r:'fixedR',v:300000,min:0,max:2000000},ads:{n:'adsN',r:'adsR',v:32,min:0,max:100},inf:{n:'infN',r:'infR',v:5,min:0,max:100},aff:{n:'affN',r:'affR',v:5,min:0,max:100},otherMkt:{n:'otherMktN',r:'otherMktR',v:0,min:0,max:100}}
-function clamp(v,a,b){return Math.min(b,Math.max(a,v))}function setVal(k,v){let c=CFG[k];v=clamp(Number(v)||0,c.min,c.max);c.v=v;let n=$(c.n),r=$(c.r);n.value=Number.isInteger(v)?v:(k==='cvr'?v.toFixed(4):v.toFixed(2));if(r)r.value=clamp(v,+r.min,+r.max)}
+ sales:{n:'salesN',r:'salesR',v:150000,min:10000,max:1000000},
+ sessions:{n:'sessionsN',r:'sessionsR',v:76612.19,min:1000,max:1000000},
+ cvr:{n:'cvrN',r:'cvrR',v:.4769,min:.01,max:10},
+ aov:{n:'aovN',r:'aovR',v:410.55,min:20,max:2000},
+ refund:{n:'refundN',r:'refundR',v:0,min:0,max:50},
+ product:{n:'productN',r:'productR',v:40,min:0,max:100},
+ fulfill:{n:'fulfillN',r:'fulfillR',v:0,min:0,max:100},
+ payment:{n:'paymentN',r:'paymentR',v:0,min:0,max:100},
+ aftersales:{n:'aftersalesN',r:'aftersalesR',v:0,min:0,max:100},
+ fixed:{n:'fixedN',r:'fixedR',v:300000,min:0,max:2000000},
+ ads:{n:'adsN',r:'adsR',v:32,min:0,max:100},
+ inf:{n:'infN',r:'infR',v:5,min:0,max:100},
+ aff:{n:'affN',r:'affR',v:5,min:0,max:100},
+ otherMkt:{n:'otherMktN',r:'otherMktR',v:0,min:0,max:100}
+};
+function clamp(v,a,b){return Math.min(b,Math.max(a,v));}
+function setVal(k,v){
+ const c=CFG[k];
+ v=clamp(Number(v)||0,c.min,c.max);
+ c.v=v;
+ const n=$(c.n),r=$(c.r);
+ n.value=Number.isInteger(v)?v:(k==='cvr'?v.toFixed(4):v.toFixed(2));
+ if(r)r.value=clamp(v,+r.min,+r.max);
+}
+function money(v){return (v<0?'-':'')+'$'+Math.abs(v).toLocaleString('en-US',{maximumFractionDigits:0});}
+function rmb(v){return (v<0?'-':'')+'¥'+Math.abs(v).toLocaleString('zh-CN',{maximumFractionDigits:0});}
+function pct(v){return Number.isFinite(v)?v.toFixed(1)+'%':'—';}
+function num(v){return Math.round(v).toLocaleString('en-US');}
+function short(v){return '$'+(v>=1000?(v/1000).toFixed(v>=100000?0:1)+'k':Math.round(v));}
+function driverResult(){
+ const orders=CFG.sessions.v*CFG.cvr.v/100;
+ const orderSales=orders*CFG.aov.v;
+ const netSales=orderSales*(1-CFG.refund.v/100);
+ return {orders,orderSales,netSales};
+}
+function requiredSessions(netSales){
+ const denom=(CFG.cvr.v/100)*CFG.aov.v*(1-CFG.refund.v/100);
+ return denom>0?netSales/denom:0;
+}
+function calc(source){
+ if(locked)return;
+ locked=true;
+ try{
+   if(source==='sales'){
+     setVal('sessions',requiredSessions(CFG.sales.v));
+   }else if(source==='driver'){
+     setVal('sales',driverResult().netSales);
+   }
+   const d=driverResult();
+   const fx=clamp(+$('fxN').value||6.72,.01,20);
+   const sales=d.netSales;
+   const rev=sales*fx;
+   const product=CFG.product.v/100,fulfill=CFG.fulfill.v/100,payment=CFG.payment.v/100,aftersales=CFG.aftersales.v/100;
+   const mkt=(CFG.ads.v+CFG.inf.v+CFG.aff.v+CFG.otherMkt.v)/100;
+   const fixed=CFG.fixed.v;
+   const gross=1-product;
+   const preMkt=1-product-fulfill-payment-aftersales;
+   const afterMkt=preMkt-mkt;
+   const fixedRate=rev>0?fixed/rev:0;
+   const profit=rev*afterMkt-fixed;
+   const margin=rev>0?profit/rev:0;
+   const beSales=afterMkt>0?fixed/afterMkt/fx:Infinity;
+   const beMkt=preMkt-fixedRate;
+   const mktAmt=rev*mkt;
+   const cpo=d.orders>0?(mktAmt/fx)/d.orders:Infinity;
+   Object.assign(state,{...d,fx,sales,rev,product,fulfill,payment,aftersales,mkt,fixed,gross,preMkt,afterMkt,fixedRate,profit,margin,beSales,beMkt,mktAmt,cpo});
+   render();
+ }finally{locked=false;}
+}
+function render(){
+ const s=state;
+ $('salesOut').textContent=money(s.sales);
+ $('salesRmbOut').textContent='≈ '+rmb(s.rev);
+ $('profitOut').textContent=rmb(s.profit);
+ $('profitUsdOut').textContent='≈ '+money(s.profit/s.fx);
+ $('marginOut').textContent=pct(s.margin*100);
+ $('beSalesOut').textContent=Number.isFinite(s.beSales)?short(s.beSales):'不可达';
+ $('profitOut').className='v '+(s.profit>=0?'positive':'negative');
+ $('marginOut').className='v '+(s.margin>=0?'positive':'negative');
+ const st=$('status');
+ if(s.profit>=0){st.style.background='#ecfdf3';st.style.color='#067647';st.textContent='当前单月盈利 '+rmb(s.profit)+'。';}
+ else{st.style.background='#fef3f2';st.style.color='#b42318';st.textContent='当前单月亏损 '+rmb(Math.abs(s.profit))+'；盈亏平衡净销售额约 '+(Number.isFinite(s.beSales)?short(s.beSales):'不可达')+'。';}
+ $('formula').innerHTML=`经营利润率 = <b>${pct(s.preMkt*100)}</b> 营销前贡献率 − <b>${pct(s.mkt*100)}</b> 营销费比 − <b>${pct(s.fixedRate*100)}</b> 固定成本率 = <b>${pct(s.margin*100)}</b>`;
+ $('sessionsOut').textContent=num(CFG.sessions.v);
+ $('cvrOut').textContent=CFG.cvr.v.toFixed(4)+'%';
+ $('ordersOut').textContent=num(s.orders);
+ $('aovOut').textContent=money(CFG.aov.v);
+ $('flowSalesOut').textContent=money(s.sales);
+ $('refundText').textContent=CFG.refund.v?'已扣 '+pct(CFG.refund.v)+' 销售冲减':'无销售冲减';
+ $('grossOut').textContent=pct(s.gross*100);
+ $('preMktOut').textContent=pct(s.preMkt*100);
+ $('mktRateOut').textContent=pct(s.mkt*100);
+ $('mktAmtOut').textContent=rmb(s.mktAmt);
+ $('beMktOut').textContent=pct(s.beMkt*100);
+ $('cpoOut').textContent=Number.isFinite(s.cpo)?money(s.cpo):'—';
+ $('repeatOut').textContent=pct(clamp(+$('repeatN').value||0,0,100));
+ const vals=[
+  ['订单销售额（退款前）',s.orderSales*s.fx,pct(100)],
+  ['退款 / 退货销售冲减',-(s.orderSales-s.sales)*s.fx,pct(CFG.refund.v)],
+  ['净销售额',s.rev,pct(100)],
+  ['产品成本',-s.rev*s.product,pct(s.product*100)],
+  ['履约 / 物流',-s.rev*s.fulfill,pct(s.fulfill*100)],
+  ['支付 / 汇兑',-s.rev*s.payment,pct(s.payment*100)],
+  ['Remake / 补寄 / 售后',-s.rev*s.aftersales,pct(s.aftersales*100)],
+  ['广告 + 网红 + 联盟 + 其他',-s.mktAmt,pct(s.mkt*100)],
+  ['固定支出',-s.fixed,pct(s.fixedRate*100)],
+  ['经营利润',s.profit,pct(s.margin*100)]
+ ];
+ $('rows').innerHTML=vals.map(v=>`<div class="row"><span>${v[0]}</span><b>${rmb(v[1])} · ${v[2]}</b></div>`).join('');
+ drawChart();
+}
+function marginAt(sales){if(sales<=0)return 0;return state.preMkt-state.mkt-state.fixed/(sales*state.fx);}
+function drawChart(){
+ const c=$('chart'),box=c.getBoundingClientRect(),dpr=devicePixelRatio||1,w=box.width,h=box.height;
+ c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);
+ const x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);
+ const p={l:43,r:10,t:10,b:27},xmin=20000,xmax=Math.max(500000,state.sales*1.4),pts=[];
+ for(let g=xmin;g<=xmax;g+=(xmax-xmin)/100)pts.push({g,y:marginAt(g)*100});
+ const ymin=Math.min(-40,Math.floor(Math.min(...pts.map(v=>v.y))/10)*10),ymax=Math.max(25,Math.ceil(Math.max(...pts.map(v=>v.y))/10)*10),iw=w-p.l-p.r,ih=h-p.t-p.b;
+ const X=g=>p.l+(g-xmin)/(xmax-xmin)*iw,Y=y=>p.t+(ymax-y)/(ymax-ymin)*ih;
+ x.clearRect(0,0,w,h);x.font='10px -apple-system,system-ui';x.fillStyle='#98a2b3';x.strokeStyle='#eaecf0';x.lineWidth=1;
+ for(let y=Math.ceil(ymin/10)*10;y<=ymax;y+=10){const py=Y(y);x.beginPath();x.moveTo(p.l,py);x.lineTo(w-p.r,py);x.stroke();x.fillText(y+'%',3,py+3);}
+ for(let i=0;i<=4;i++){const g=xmin+(xmax-xmin)*i/4;x.fillText(short(g),Math.max(1,X(g)-15),h-7);}
+ if(ymin<0&&ymax>0){x.strokeStyle='#98a2b3';x.beginPath();x.moveTo(p.l,Y(0));x.lineTo(w-p.r,Y(0));x.stroke();}
+ x.strokeStyle='#111827';x.lineWidth=2.5;x.beginPath();pts.forEach((v,i)=>i?x.lineTo(X(v.g),Y(v.y)):x.moveTo(X(v.g),Y(v.y)));x.stroke();
+ const gy=marginAt(state.sales)*100;x.fillStyle=gy>=0?'#067647':'#b42318';x.beginPath();x.arc(X(state.sales),Y(gy),5,0,Math.PI*2);x.fill();
+ c._map={p,w,h,xmin,xmax,X,Y};
+}
+function inspect(ev){
+ const c=$('chart'),m=c._map;
+ if(!m)return;
+ const r=c.getBoundingClientRect();
+ const cx=ev.clientX-r.left;
+ if(cx<m.p.l||cx>m.w-m.p.r){$('tip').style.display='none';return;}
+ const g=m.xmin+(cx-m.p.l)/(m.w-m.p.l-m.p.r)*(m.xmax-m.xmin),y=marginAt(g)*100,tip=$('tip');
+ tip.innerHTML=`净销售额 <b>${short(g)}</b><br>经营利润率 <b>${pct(y)}</b>`;
+ tip.style.display='block';tip.style.left=Math.min(m.w-120,Math.max(2,cx+7))+'px';tip.style.top=Math.max(2,Math.min(m.h-45,m.Y(y)-21))+'px';
+}
 Object.keys(CFG).forEach(k=>setVal(k,CFG[k].v));
-const money=v=>(v<0?'-':'')+'$'+Math.abs(v).toLocaleString('en-US',{maximumFractionDigits:0}),rmb=v=>(v<0?'-':'')+'¥'+Math.abs(v).toLocaleString('zh-CN',{maximumFractionDigits:0}),pct=v=>Number.isFinite(v)?v.toFixed(1)+'%':'—',num=v=>Math.round(v).toLocaleString('en-US'),short=v=>'$'+(v>=1000?(v/1000).toFixed(v>=100000?0:1)+'k':Math.round(v));
-function driverResult(){let c=CFG,orders=c.sessions.v*c.cvr.v/100,orderSales=orders*c.aov.v,netSales=orderSales*(1-c.refund.v/100);return{orders,orderSales,netSales}}
-function requiredSessions(netSales){let c=CFG,den=(c.cvr.v/100)*c.aov.v*(1-c.refund.v/100);return den>0?netSales/den:0}
-function calc(source){if(locked)return;locked=true;if(source==='sales'){setVal('sessions',requiredSessions(CFG.sales.v))}else{let d=driverResult();setVal('sales',d.netSales)}let d=driverResult(),fx=clamp(+$('fxN').value||6.72,.01,20),sales=d.netSales,rev=sales*fx,product=CFG.product.v/100,fulfill=CFG.fulfill.v/100,payment=CFG.payment.v/100,aftersales=CFG.aftersales.v/100,mkt=(CFG.ads.v+CFG.inf.v+CFG.aff.v+CFG.otherMkt.v)/100,fixed=CFG.fixed.v,gross=1-product,preMkt=1-product-fulfill-payment-aftersales,afterMkt=preMkt-mkt,fixedRate=rev>0?fixed/rev:0,profit=rev*afterMkt-fixed,margin=rev>0?profit/rev:0,beSales=afterMkt>0?fixed/afterMkt/fx:Infinity,beMkt=preMkt-fixedRate,mktAmt=rev*mkt,cpo=d.orders>0?(mktAmt/fx)/d.orders:Infinity;Object.assign(state,{...d,fx,sales,rev,product,fulfill,payment,aftersales,mkt,fixed,gross,preMkt,afterMkt,fixedRate,profit,margin,beSales,beMkt,mktAmt,cpo});render();locked=false}
-function render(){let s=state;$('salesOut').textContent=money(s.sales);$('salesRmbOut').textContent='≈ '+rmb(s.rev);$('profitOut').textContent=rmb(s.profit);$('profitUsdOut').textContent='≈ '+money(s.profit/s.fx);$('marginOut').textContent=pct(s.margin*100);$('beSalesOut').textContent=Number.isFinite(s.beSales)?short(s.beSales):'不可达';$('profitOut').className='v '+(s.profit>=0?'positive':'negative');$('marginOut').className='v '+(s.margin>=0?'positive':'negative');let st=$('status');if(s.profit>=0){st.style.background='#ecfdf3';st.style.color='#067647';st.textContent='当前单月盈利 '+rmb(s.profit)+'，高于盈亏平衡线。'}else{st.style.background='#fef3f2';st.style.color='#b42318';st.textContent='当前单月亏损 '+rmb(Math.abs(s.profit))+'；按当前费率结构，盈亏平衡净销售额约 '+(Number.isFinite(s.beSales)?short(s.beSales):'不可达')+'。'}$('formula').innerHTML=`经营利润率 = <b>${pct(s.preMkt*100)}</b> 营销前贡献率 − <b>${pct(s.mkt*100)}</b> 营销费比 − <b>${pct(s.fixedRate*100)}</b> 固定成本率 = <b>${pct(s.margin*100)}</b>`;
-$('sessionsOut').textContent=num(CFG.sessions.v);$('cvrOut').textContent=CFG.cvr.v.toFixed(4)+'%';$('ordersOut').textContent=num(s.orders);$('aovOut').textContent=money(CFG.aov.v);$('flowSalesOut').textContent=money(s.sales);$('refundText').textContent=CFG.refund.v?`已扣 ${pct(CFG.refund.v)} 销售冲减`:'无销售冲减';$('grossOut').textContent=pct(s.gross*100);$('preMktOut').textContent=pct(s.preMkt*100);$('mktRateOut').textContent=pct(s.mkt*100);$('mktAmtOut').textContent=rmb(s.mktAmt);$('beMktOut').textContent=pct(s.beMkt*100);$('cpoOut').textContent=Number.isFinite(s.cpo)?money(s.cpo):'—';$('repeatOut').textContent=pct(clamp(+$('repeatN').value||0,0,100));let vals=[['订单销售额（退款前）',s.orderSales*s.fx,pct(100)],['退款 / 退货销售冲减',-(s.orderSales-s.sales)*s.fx,pct(CFG.refund.v)],['净销售额',s.rev,pct(100)],['产品成本',-s.rev*s.product,pct(s.product*100)],['履约 / 物流',-s.rev*s.fulfill,pct(s.fulfill*100)],['支付 / 汇兑',-s.rev*s.payment,pct(s.payment*100)],['Remake / 补寄 / 售后',-s.rev*s.aftersales,pct(s.aftersales*100)],['广告 + 网红 + 联盟 + 其他',-s.mktAmt,pct(s.mkt*100)],['固定支出',-s.fixed,pct(s.fixedRate*100)],['经营利润',s.profit,pct(s.margin*100)]];$('rows').innerHTML=vals.map(v=>`<div class="row"><span>${v[0]}</span><b>${rmb(v[1])} · ${v[2]}</b></div>`).join('');drawChart()}
-function marginAt(sales){if(sales<=0)return 0;return state.preMkt-state.mkt-state.fixed/(sales*state.fx)}
-function drawChart(){let c=$('chart'),box=c.getBoundingClientRect(),dpr=devicePixelRatio||1,w=box.width,h=box.height;c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);let x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);let p={l:43,r:10,t:10,b:27},xmin=20000,xmax=Math.max(500000,state.sales*1.4),pts=[];for(let g=xmin;g<=xmax;g+=(xmax-xmin)/100)pts.push({g,y:marginAt(g)*100});let ymin=Math.min(-40,Math.floor(Math.min(...pts.map(v=>v.y))/10)*10),ymax=Math.max(25,Math.ceil(Math.max(...pts.map(v=>v.y))/10)*10),iw=w-p.l-p.r,ih=h-p.t-p.b,X=g=>p.l+(g-xmin)/(xmax-xmin)*iw,Y=y=>p.t+(ymax-y)/(ymax-ymin)*ih;x.clearRect(0,0,w,h);x.font='10px -apple-system,system-ui';x.fillStyle='#98a2b3';x.strokeStyle='#eaecf0';x.lineWidth=1;for(let y=Math.ceil(ymin/10)*10;y<=ymax;y+=10){let py=Y(y);x.beginPath();x.moveTo(p.l,py);x.lineTo(w-p.r,py);x.stroke();x.fillText(y+'%',3,py+3)}for(let i=0;i<=4;i++){let g=xmin+(xmax-xmin)*i/4;x.fillText(short(g),Math.max(1,X(g)-15),h-7)}if(ymin<0&&ymax>0){x.strokeStyle='#98a2b3';x.beginPath();x.moveTo(p.l,Y(0));x.lineTo(w-p.r,Y(0));x.stroke()}x.strokeStyle='#111827';x.lineWidth=2.5;x.beginPath();pts.forEach((v,i)=>i?x.lineTo(X(v.g),Y(v.y)):x.moveTo(X(v.g),Y(v.y)));x.stroke();let gy=marginAt(state.sales)*100;x.fillStyle=gy>=0?'#067647':'#b42318';x.beginPath();x.arc(X(state.sales),Y(gy),5,0,Math.PI*2);x.fill();c._map={p,w,h,xmin,xmax,X,Y}}
-function inspect(ev){let c=$('chart'),m=c._map;if(!m)return,r=c.getBoundingClientRect(),cx=ev.clientX-r.left;if(cx<m.p.l||cx>m.w-m.p.r){$('tip').style.display='none';return}let g=m.xmin+(cx-m.p.l)/(m.w-m.p.l-m.p.r)*(m.xmax-m.xmin),y=marginAt(g)*100,tip=$('tip');tip.innerHTML=`净销售额 <b>${short(g)}</b><br>经营利润率 <b>${pct(y)}</b>`;tip.style.display='block';tip.style.left=Math.min(m.w-120,Math.max(2,cx+7))+'px';tip.style.top=Math.max(2,Math.min(m.h-45,m.Y(y)-21))+'px'}
-Object.keys(CFG).forEach(k=>{let c=CFG[k],n=$(c.n),r=$(c.r);n.addEventListener('input',()=>{setVal(k,n.value);calc(k==='sales'?'sales':'driver')});if(r)r.addEventListener('input',()=>{setVal(k,r.value);calc(k==='sales'?'sales':'driver')})});$('repeatN').addEventListener('input',()=>render());$('fxN').addEventListener('input',()=>calc('other'));['pointerdown','pointermove'].forEach(e=>$('chart').addEventListener(e,inspect));$('chart').addEventListener('pointerleave',()=>$('tip').style.display='none');addEventListener('resize',drawChart);calc('driver');
+Object.keys(CFG).forEach(k=>{
+ const c=CFG[k],n=$(c.n),r=$(c.r);
+ const mode=(k==='sales')?'sales':(['sessions','cvr','aov','refund'].includes(k)?'driver':'cost');
+ n.addEventListener('input',()=>{setVal(k,n.value);calc(mode);});
+ if(r)r.addEventListener('input',()=>{setVal(k,r.value);calc(mode);});
+});
+$('repeatN').addEventListener('input',()=>render());
+$('fxN').addEventListener('input',()=>calc('cost'));
+['pointerdown','pointermove'].forEach(e=>$('chart').addEventListener(e,inspect));
+$('chart').addEventListener('pointerleave',()=>$('tip').style.display='none');
+window.addEventListener('resize',drawChart);
+calc('sales');
 </script>
 </body>
 </html>
