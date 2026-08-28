@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=yes">
+<meta name="theme-color" content="#f5f6f8">
+<title>TheHues 盈利模型</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--text:#111827;--muted:#667085;--line:#e4e7ec;--good:#067647;--bad:#b42318;--warn:#b54708;--accent:#111827}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif}
+body{padding-bottom:max(28px,env(safe-area-inset-bottom))}
+.wrap{width:min(100%,760px);margin:auto;padding:18px 14px 30px}
+h1{margin:4px 0 4px;font-size:24px;letter-spacing:-.02em}.lead{margin:0 0 16px;color:var(--muted);font-size:13px;line-height:1.55}
+.controls{display:grid;gap:10px}.control,.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 1px 2px rgba(16,24,40,.03)}
+.control{padding:14px 14px 13px}.control-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.control-name{font-size:14px;font-weight:700}.control-value{font-size:22px;font-weight:800;letter-spacing:-.02em}
+input[type=range]{width:100%;height:32px;margin:0;appearance:none;background:transparent;touch-action:pan-y}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:999px;background:#e8ebf0}input[type=range]::-webkit-slider-thumb{appearance:none;width:28px;height:28px;border-radius:50%;background:#111827;margin-top:-10px;border:4px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.22)}
+input[type=range]::-moz-range-track{height:8px;border-radius:999px;background:#e8ebf0}input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#111827;border:4px solid #fff}
+.ends{display:flex;justify-content:space-between;color:#98a2b3;font-size:11px;margin-top:1px}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px;min-height:96px}.kpi .n{font-size:11px;color:var(--muted);margin-bottom:6px}.kpi .v{font-size:21px;font-weight:800;letter-spacing:-.025em;overflow-wrap:anywhere}.kpi .s{font-size:10px;color:#98a2b3;margin-top:5px;line-height:1.35}
+.card{margin-top:10px;padding:14px}.card h2{font-size:15px;margin:0 0 10px}.status{padding:11px 12px;border-radius:12px;font-size:13px;font-weight:700;line-height:1.45;margin-bottom:10px}.formula{font-size:12px;line-height:1.65;background:#f8fafc;border:1px dashed #d0d5dd;border-radius:12px;padding:10px 11px;color:#344054}
+.chartbox{position:relative;width:100%;height:245px;overflow:hidden;border-radius:12px}.chartbox canvas{display:block;width:100%;height:245px;touch-action:pan-y}.tip{position:absolute;display:none;pointer-events:none;background:#101828;color:#fff;border-radius:9px;padding:7px 9px;font-size:11px;line-height:1.45;white-space:nowrap;box-shadow:0 6px 16px rgba(16,24,40,.18)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}.mini{border:1px solid var(--line);border-radius:12px;padding:10px}.mini .n{font-size:10px;color:var(--muted);margin-bottom:4px}.mini .v{font-size:17px;font-weight:800}
+details{border-top:1px solid var(--line);margin-top:12px;padding-top:10px}summary{font-size:12px;font-weight:700;cursor:pointer;list-style:none}summary::-webkit-details-marker{display:none}.adv{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.field{border:1px solid var(--line);border-radius:11px;padding:9px}.field label{display:block;color:var(--muted);font-size:10px;margin-bottom:4px}.field input{width:100%;border:0;outline:0;font-size:16px;font-weight:800;background:transparent;color:var(--text)}
+.rows{display:grid;gap:8px;margin-top:10px}.row{display:flex;justify-content:space-between;gap:10px;font-size:12px}.row span:first-child{color:var(--muted)}.row b{font-size:12px;text-align:right}.note{font-size:10px;color:#98a2b3;line-height:1.5;margin-top:10px}
+@media(min-width:700px){.wrap{padding:28px 20px}.controls{grid-template-columns:repeat(3,1fr)}.kpis{grid-template-columns:repeat(4,1fr)}.chartbox,.chartbox canvas{height:300px}.control-value{font-size:20px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<h1>TheHues 盈利模型</h1>
+<p class="lead">拖动下面 3 个变量，实时看盈利、盈亏平衡点和 GMV 规模效应。手机上可直接拖滑杆，趋势图可触摸查看任意 GMV。</p>
+<section class="controls">
+  <div class="control"><div class="control-head"><span class="control-name">月 GMV</span><span class="control-value" id="gmvLabel">$150k</span></div><input id="gmv" type="range" min="50000" max="500000" step="5000" value="150000"><div class="ends"><span>$50k</span><span>$500k</span></div></div>
+  <div class="control"><div class="control-head"><span class="control-name">毛利率</span><span class="control-value" id="marginLabel">60.0%</span></div><input id="margin" type="range" min="30" max="85" step="0.5" value="60"><div class="ends"><span>30%</span><span>85%</span></div></div>
+  <div class="control"><div class="control-head"><span class="control-name">总营销费比</span><span class="control-value" id="marketingLabel">42.0%</span></div><input id="marketing" type="range" min="0" max="60" step="0.5" value="42"><div class="ends"><span>0%</span><span>60%</span></div></div>
+</section>
+<section class="kpis">
+  <div class="kpi"><div class="n">最终经营利润</div><div class="v" id="profitRmb">—</div><div class="s" id="profitUsd">—</div></div>
+  <div class="kpi"><div class="n">最终利润率</div><div class="v" id="profitMargin">—</div><div class="s">毛利 − 营销 − 固定成本率</div></div>
+  <div class="kpi"><div class="n">盈亏平衡营销费比</div><div class="v" id="beMarketing">—</div><div class="s">当前毛利与 GMV 下的上限</div></div>
+  <div class="kpi"><div class="n">盈亏平衡 GMV</div><div class="v" id="beGmv">—</div><div class="s">保持当前毛利和营销费比</div></div>
+</section>
+<section class="card"><h2>当前状态</h2><div class="status" id="status"></div><div class="formula" id="formula"></div></section>
+<section class="card"><h2>GMV 增长 → 最终利润率</h2><div class="chartbox"><canvas id="chart"></canvas><div class="tip" id="tip"></div></div><div class="note">当前选择的毛利率与营销费比保持不变，仅观察 GMV 从 $50k 到 $500k 时固定成本被摊薄后的变化。触摸/移动趋势图可查看具体点。</div></section>
+<section class="card"><h2>当前参数的关键线</h2><div class="two">
+  <div class="mini"><div class="n">固定成本率</div><div class="v" id="fixedRate">—</div></div>
+  <div class="mini"><div class="n">盈亏平衡所需毛利率</div><div class="v" id="needMargin">—</div></div>
+  <div class="mini"><div class="n">留 5% 利润最高营销费</div><div class="v" id="mkt5">—</div></div>
+  <div class="mini"><div class="n">留 10% 利润最高营销费</div><div class="v" id="mkt10">—</div></div>
+</div>
+<details><summary>金额拆解 ▾</summary><div class="rows"><div class="row"><span>GMV（RMB）</span><b id="rev">—</b></div><div class="row"><span>产品成本</span><b id="cogs">—</b></div><div class="row"><span>毛利润</span><b id="gp">—</b></div><div class="row"><span>总营销费用</span><b id="mkt">—</b></div><div class="row"><span>固定支出</span><b id="fixed">—</b></div><div class="row"><span>最终经营利润</span><b id="profit">—</b></div></div></details>
+<details><summary>高级设置 ▾</summary><div class="adv"><div class="field"><label>固定支出 RMB/月</label><input id="fixedCost" type="number" value="300000" step="10000"></div><div class="field"><label>USD → RMB 汇率</label><input id="fx" type="number" value="6.72" step="0.01"></div></div></details>
+</section>
+</main>
+<script>
+const q=id=>document.getElementById(id), E={gmv:q('gmv'),margin:q('margin'),marketing:q('marketing'),fixedCost:q('fixedCost'),fx:q('fx'),chart:q('chart'),tip:q('tip')};let S={};
+const pc=v=>Number.isFinite(v)?v.toFixed(1)+'%':'—', usd=v=>(v<0?'-':'')+'$'+Math.abs(v).toLocaleString('en-US',{maximumFractionDigits:0}), rmb=v=>(v<0?'-':'')+'¥'+Math.abs(v).toLocaleString('zh-CN',{maximumFractionDigits:0}), ku=v=>'$'+Math.round(v/1000)+'k';
+function pmAt(g){return S.margin-S.marketing-S.fixed/(g*S.fx)}
+function update(){
+ const gmv=+E.gmv.value,margin=+E.margin.value/100,marketing=+E.marketing.value/100,fixed=Math.max(0,+E.fixedCost.value||0),fx=Math.max(.01,+E.fx.value||6.72),rev=gmv*fx,fixedRate=fixed/rev,gp=rev*margin,mkt=rev*marketing,profit=gp-mkt-fixed,pm=profit/rev,beM=margin-fixedRate,needM=marketing+fixedRate,spread=margin-marketing,beG=spread>0?(fixed/spread)/fx:Infinity;
+ S={gmv,margin,marketing,fixed,fx,rev,fixedRate,gp,mkt,profit,pm,beM,needM,beG};
+ q('gmvLabel').textContent=ku(gmv);q('marginLabel').textContent=pc(margin*100);q('marketingLabel').textContent=pc(marketing*100);
+ q('profitRmb').textContent=rmb(profit);q('profitUsd').textContent='≈ '+usd(profit/fx);q('profitMargin').textContent=pc(pm*100);q('beMarketing').textContent=pc(beM*100);q('beGmv').textContent=Number.isFinite(beG)?ku(beG):'不可达';
+ q('fixedRate').textContent=pc(fixedRate*100);q('needMargin').textContent=pc(needM*100);q('mkt5').textContent=pc((margin-fixedRate-.05)*100);q('mkt10').textContent=pc((margin-fixedRate-.10)*100);
+ q('rev').textContent=rmb(rev);q('cogs').textContent=rmb(rev*(1-margin));q('gp').textContent=rmb(gp);q('mkt').textContent=rmb(mkt);q('fixed').textContent=rmb(fixed);q('profit').textContent=rmb(profit);
+ q('formula').innerHTML=`最终利润率 = <b>${pc(margin*100)}</b> 毛利 − <b>${pc(marketing*100)}</b> 营销 − <b>${pc(fixedRate*100)}</b> 固定成本率 = <b>${pc(pm*100)}</b>`;
+ const st=q('status');if(pm>=.1){st.textContent='健康：当前模型可留下 10% 以上经营利润。';st.style.background='#ecfdf3';st.style.color='#067647'}else if(pm>=.05){st.textContent='可接受：当前模型可留下 5%–10% 经营利润。';st.style.background='#f0fdf4';st.style.color='#067647'}else if(pm>=0){st.textContent='偏薄：已经盈利，但利润缓冲不足 5%。';st.style.background='#fffaeb';st.style.color='#b54708'}else{st.textContent='亏损：当前毛利与营销费组合无法覆盖固定支出。';st.style.background='#fef3f2';st.style.color='#b42318'}
+ draw();
+}
+function draw(){const c=E.chart,box=c.getBoundingClientRect(),dpr=devicePixelRatio||1,w=box.width,h=box.height;c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);const x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);const p={l:43,r:12,t:14,b:30},iw=w-p.l-p.r,ih=h-p.t-p.b,xmin=50000,xmax=500000,pts=[];for(let g=xmin;g<=xmax;g+=5000)pts.push({g,y:pmAt(g)*100});let ymin=Math.min(-20,Math.floor(Math.min(...pts.map(a=>a.y))/10)*10),ymax=Math.max(20,Math.ceil(Math.max(...pts.map(a=>a.y))/10)*10);const X=g=>p.l+(g-xmin)/(xmax-xmin)*iw,Y=y=>p.t+(ymax-y)/(ymax-ymin)*ih;x.clearRect(0,0,w,h);x.font='10px -apple-system,system-ui';x.fillStyle='#98a2b3';x.strokeStyle='#eaecf0';x.lineWidth=1;for(let y=Math.ceil(ymin/10)*10;y<=ymax;y+=10){let py=Y(y);x.beginPath();x.moveTo(p.l,py);x.lineTo(w-p.r,py);x.stroke();x.fillText(y+'%',3,py+3)}[50000,150000,250000,350000,500000].forEach(g=>{let px=X(g);x.fillText('$'+Math.round(g/1000)+'k',Math.max(1,px-15),h-8)});if(ymin<0&&ymax>0){x.strokeStyle='#98a2b3';x.beginPath();x.moveTo(p.l,Y(0));x.lineTo(w-p.r,Y(0));x.stroke()}x.strokeStyle='#101828';x.lineWidth=2.5;x.beginPath();pts.forEach((a,i)=>i?x.lineTo(X(a.g),Y(a.y)):x.moveTo(X(a.g),Y(a.y)));x.stroke();let cy=pmAt(S.gmv)*100;x.fillStyle=cy>=0?'#067647':'#b42318';x.beginPath();x.arc(X(S.gmv),Y(cy),5,0,Math.PI*2);x.fill();c.map={X,Y,p,w,h,xmin,xmax}}
+function inspect(ev){const m=E.chart.map;if(!m)return;const r=E.chart.getBoundingClientRect(),cx=(ev.touches?ev.touches[0].clientX:ev.clientX)-r.left;if(cx<m.p.l||cx>m.w-m.p.r){E.tip.style.display='none';return}let g=m.xmin+(cx-m.p.l)/(m.w-m.p.l-m.p.r)*(m.xmax-m.xmin);g=Math.round(g/5000)*5000;const y=pmAt(g)*100;E.tip.innerHTML=`GMV <b>${ku(g)}</b><br>最终利润率 <b>${pc(y)}</b>`;E.tip.style.display='block';E.tip.style.left=Math.min(m.w-112,Math.max(3,cx+7))+'px';E.tip.style.top=Math.max(3,Math.min(m.h-48,m.Y(y)-23))+'px'}
+['pointerdown','pointermove'].forEach(n=>E.chart.addEventListener(n,inspect));E.chart.addEventListener('pointerleave',()=>E.tip.style.display='none');['gmv','margin','marketing','fixedCost','fx'].forEach(id=>q(id).addEventListener('input',update));addEventListener('resize',()=>draw());update();
+</script>
+</body>
+</html>
