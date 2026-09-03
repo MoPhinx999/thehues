@@ -6,17 +6,118 @@
 <meta name="theme-color" content="#f4f6f8">
 <title>多站点单月经营模型</title>
 <style>
-:root{--bg:#f4f6f8;--card:#fff;--text:#101828;--muted:#667085;--line:#e4e7ec;--soft:#f8fafc;--dark:#111827;--good:#067647;--goodbg:#ecfdf3;--bad:#b42318;--badbg:#fef3f2}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif}body{padding-bottom:max(24px,env(safe-area-inset-bottom))}button,input{font:inherit}.shell{max-width:1480px;margin:auto;padding:28px 26px 44px}.header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:18px}.header h1{margin:0 0 5px;font-size:30px;letter-spacing:-.035em}.header p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}.reset{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;color:#475467;font-size:12px;cursor:pointer}.reset:hover{background:var(--soft)}
-.site-switch{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}.site-btn{border:1px solid var(--line);background:#fff;color:#667085;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:750;cursor:pointer}.site-btn:hover{background:var(--soft);color:#344054}.site-btn.active{background:var(--dark);border-color:var(--dark);color:#fff}.site-note{margin-top:5px;color:#98a2b3;font-size:10px;line-height:1.45}
-.section-title{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin:0 0 10px}.section-title h2{font-size:15px;margin:0}.section-title small{font-size:10px;color:#98a2b3}.card,.control{background:var(--card);border:1px solid var(--line);border-radius:17px;box-shadow:0 1px 2px rgba(16,24,40,.025)}.sales-card{padding:16px;margin-bottom:14px}.sales-layout{display:grid;grid-template-columns:minmax(330px,.9fr) minmax(620px,1.7fr);gap:12px}.sales-main{padding:15px;border:1px solid var(--line);border-radius:14px;background:#fff}.driver-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.driver{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}.control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.label{font-size:12px;font-weight:750}.valuebox{display:flex;align-items:center;gap:4px;white-space:nowrap}.valuebox input{width:100px;border:0;outline:0;background:transparent;text-align:right;font-size:21px;font-weight:850;color:var(--text);padding:0}.driver .valuebox input{font-size:17px;width:82px}.unit{font-size:10px;color:var(--muted)}.helper{font-size:10px;color:#98a2b3;line-height:1.45;margin-top:7px}.ends{display:flex;justify-content:space-between;font-size:9px;color:#98a2b3;margin-top:2px}input[type=range]{width:100%;height:30px;margin:0;appearance:none;background:transparent;touch-action:pan-y}input[type=range]::-webkit-slider-runnable-track{height:7px;border-radius:999px;background:#e8ebf0}input[type=range]::-webkit-slider-thumb{appearance:none;width:25px;height:25px;border-radius:50%;background:var(--dark);border:4px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.22);margin-top:-9px}input[type=range]::-moz-range-track{height:7px;border-radius:999px;background:#e8ebf0}input[type=range]::-moz-range-thumb{width:19px;height:19px;border-radius:50%;background:var(--dark);border:4px solid #fff}.driver input[type=range]{height:26px}.driver .ref-note{font-size:9px;color:#98a2b3;line-height:1.4;margin-top:5px}.core-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}.control{padding:15px}.dashboard{display:grid;grid-template-columns:minmax(420px,.78fr) minmax(620px,1.22fr);gap:14px;align-items:start}.card-pad,.chart-card{padding:17px}.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}.kpi{border:1px solid var(--line);border-radius:14px;padding:13px;min-height:104px}.kpi .n{font-size:10px;color:var(--muted);margin-bottom:7px}.kpi .v{font-size:24px;font-weight:850;letter-spacing:-.035em}.kpi .s{font-size:10px;color:#98a2b3;margin-top:5px;line-height:1.4}.positive{color:var(--good)}.negative{color:var(--bad)}.status{margin-top:10px;padding:11px 12px;border-radius:12px;font-size:12px;line-height:1.45;font-weight:700}.waterfall{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}.waterfall-title{font-size:11px;font-weight:750;color:#344054;margin-bottom:8px}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.step{background:var(--soft);border-radius:11px;padding:10px 9px;position:relative;min-width:0}.step:not(:last-child):after{content:"→";position:absolute;right:-8px;top:50%;transform:translateY(-50%);color:#98a2b3;font-size:13px;z-index:2}.step .n{font-size:9px;color:var(--muted)}.step .v{font-size:17px;font-weight:850;margin-top:3px}.step.final.good{background:var(--goodbg)}.step.final.bad{background:var(--badbg)}.quick-lines{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}.quick{background:var(--soft);border-radius:10px;padding:9px}.quick .n{font-size:9px;color:var(--muted)}.quick .v{font-size:15px;font-weight:800;margin-top:3px}.chart-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin-bottom:8px}.chart-head h2{margin:0;font-size:15px}.chart-head .meta{font-size:10px;color:#98a2b3;text-align:right}.chartbox{height:370px;position:relative;overflow:hidden;border-radius:12px;background:linear-gradient(to bottom,#fff,#fbfcfd)}.chartbox canvas{display:block;width:100%;height:370px;touch-action:pan-y}.tip{position:absolute;display:none;pointer-events:none;background:#101828;color:#fff;border-radius:9px;padding:7px 9px;font-size:10px;line-height:1.5;white-space:nowrap;box-shadow:0 6px 18px rgba(16,24,40,.18)}.chart-note{font-size:10px;color:#98a2b3;line-height:1.5;margin-top:7px}.footer-note{font-size:10px;color:#98a2b3;line-height:1.55;margin-top:11px;padding:0 2px}@media(max-width:1180px){.shell{max-width:860px;padding:20px 16px 36px}.sales-layout{grid-template-columns:1fr}.driver-grid{grid-template-columns:repeat(4,1fr)}.core-grid{grid-template-columns:1fr 1fr 1fr}.dashboard{grid-template-columns:1fr}.chartbox,.chartbox canvas{height:310px}.header{align-items:flex-start}}@media(max-width:720px){.driver-grid{grid-template-columns:1fr 1fr}.core-grid{grid-template-columns:1fr}}@media(max-width:560px){.shell{padding:14px 10px 30px}.header{margin-bottom:14px}.header h1{font-size:23px}.header p{font-size:11px}.sales-card,.card-pad,.chart-card{padding:12px}.sales-layout{gap:8px}.sales-main{padding:13px}.driver-grid{grid-template-columns:1fr 1fr;gap:8px}.driver{padding:10px}.driver .valuebox input{font-size:16px;width:70px}.control{padding:13px}.kpis{gap:8px}.kpi{padding:11px;min-height:92px}.kpi .v{font-size:20px}.steps{grid-template-columns:1fr 1fr}.step:not(:last-child):after{display:none}.quick-lines{grid-template-columns:1fr 1fr}.chartbox,.chartbox canvas{height:260px}.section-title small,.chart-head .meta{display:none}.valuebox input{font-size:20px;width:96px}}
+:root{
+  --bg:#f4f6f8;--card:#fff;--text:#101828;--muted:#667085;--line:#e4e7ec;
+  --soft:#f8fafc;--dark:#111827;--good:#067647;--goodbg:#ecfdf3;
+  --bad:#b42318;--badbg:#fef3f2;--accent:#344054;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif}
+body{padding-bottom:max(24px,env(safe-area-inset-bottom))}
+button,input{font:inherit}
+.shell{max-width:1480px;margin:auto;padding:28px 26px 44px}
+.header{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:18px}
+.header h1{margin:0 0 5px;font-size:30px;letter-spacing:-.035em}
+.header p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.reset{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;color:#475467;font-size:12px;cursor:pointer}
+.reset:hover{background:var(--soft)}
+.site-switch{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+.site-btn{border:1px solid var(--line);background:#fff;color:#667085;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer;transition:.15s}
+.site-btn:hover{background:var(--soft);color:#344054}
+.site-btn.active{background:var(--dark);border-color:var(--dark);color:#fff}
+.site-note{margin-top:5px;color:#98a2b3;font-size:10px;line-height:1.45}
+.section-title{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin:0 0 10px}
+.section-title h2{font-size:15px;margin:0}
+.section-title small{font-size:10px;color:#98a2b3}
+.card,.control{background:var(--card);border:1px solid var(--line);border-radius:17px;box-shadow:0 1px 2px rgba(16,24,40,.025)}
+.sales-card{padding:16px;margin-bottom:14px}
+.mode-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.mode-copy{min-width:0}.mode-title{font-size:11px;font-weight:800;color:#344054}.mode-hint{font-size:9px;color:#98a2b3;margin-top:3px;line-height:1.4}
+.mode-switch{display:flex;gap:3px;padding:3px;background:var(--soft);border:1px solid var(--line);border-radius:999px;flex:0 0 auto}.mode-btn{border:0;background:transparent;color:#667085;border-radius:999px;padding:6px 10px;font-size:10px;font-weight:750;cursor:pointer}.mode-btn.active{background:#fff;color:#101828;box-shadow:0 1px 2px rgba(16,24,40,.10)}
+.sales-layout{display:grid;grid-template-columns:minmax(290px,.58fr) minmax(760px,1.72fr);gap:12px;align-items:stretch}
+.sales-main{padding:15px;border:1px solid var(--line);border-radius:14px;background:#fff;transition:.15s}.sales-main.is-forecast{background:var(--soft)}.sales-main.is-forecast input{cursor:not-allowed}.sales-badge{display:inline-flex;margin-top:9px;padding:5px 8px;border-radius:999px;background:var(--soft);color:#667085;font-size:9px;font-weight:700}.sales-badge.active{background:#eef4ff;color:#3538cd}
+.forecast-panel{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}.source-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.source-card{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}.source-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:9px}.source-head .name{font-size:11px;font-weight:800}.source-head .amount{font-size:13px;font-weight:850;white-space:nowrap}.source-sub{font-size:9px;color:#98a2b3;margin-top:2px;line-height:1.35}.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.mini-field{background:var(--soft);border-radius:9px;padding:7px}.mini-field label{display:block;font-size:8px;color:#667085;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mini-field .mini-input{display:flex;align-items:center;gap:2px}.mini-field input{min-width:0;width:100%;border:0;outline:0;background:transparent;font-size:13px;font-weight:800;color:#101828;padding:0}.mini-field .mini-unit{font-size:8px;color:#98a2b3}.forecast-total{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:9px;padding:10px 11px;border-radius:11px;background:var(--soft)}.forecast-total .n{font-size:9px;color:#667085}.forecast-total .v{font-size:17px;font-weight:850}.forecast-note{font-size:9px;color:#98a2b3;line-height:1.45;margin-top:7px}
+.control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+.label{font-size:12px;font-weight:750}
+.valuebox{display:flex;align-items:center;gap:4px;white-space:nowrap}
+.valuebox input{width:100px;border:0;outline:0;background:transparent;text-align:right;font-size:21px;font-weight:850;color:var(--text);padding:0}
+.unit{font-size:10px;color:var(--muted)}
+.helper{font-size:10px;color:#98a2b3;line-height:1.45;margin-top:7px}
+.ends{display:flex;justify-content:space-between;font-size:9px;color:#98a2b3;margin-top:2px}
+input[type=range]{width:100%;height:30px;margin:0;appearance:none;background:transparent;touch-action:pan-y}
+input[type=range]::-webkit-slider-runnable-track{height:7px;border-radius:999px;background:#e8ebf0}
+input[type=range]::-webkit-slider-thumb{appearance:none;width:25px;height:25px;border-radius:50%;background:var(--dark);border:4px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.22);margin-top:-9px}
+input[type=range]::-moz-range-track{height:7px;border-radius:999px;background:#e8ebf0}
+input[type=range]::-moz-range-thumb{width:19px;height:19px;border-radius:50%;background:var(--dark);border:4px solid #fff}
+.core-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.control{padding:15px}
+.dashboard{display:grid;grid-template-columns:minmax(420px,.78fr) minmax(620px,1.22fr);gap:14px;align-items:start}
+.card-pad,.chart-card{padding:17px}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi{border:1px solid var(--line);border-radius:14px;padding:13px;min-height:104px}
+.kpi .n{font-size:10px;color:var(--muted);margin-bottom:7px}
+.kpi .v{font-size:24px;font-weight:850;letter-spacing:-.035em}
+.kpi .s{font-size:10px;color:#98a2b3;margin-top:5px;line-height:1.4}
+.positive{color:var(--good)}.negative{color:var(--bad)}
+.status{margin-top:10px;padding:11px 12px;border-radius:12px;font-size:12px;line-height:1.45;font-weight:700}
+.waterfall{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.waterfall-title{font-size:11px;font-weight:750;color:#344054;margin-bottom:8px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.step{background:var(--soft);border-radius:11px;padding:10px 9px;position:relative;min-width:0}
+.step:not(:last-child):after{content:"→";position:absolute;right:-8px;top:50%;transform:translateY(-50%);color:#98a2b3;font-size:13px;z-index:2}
+.step .n{font-size:9px;color:var(--muted)}
+.step .v{font-size:17px;font-weight:850;margin-top:3px}
+.step.final.good{background:var(--goodbg)}.step.final.bad{background:var(--badbg)}
+.quick-lines{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}
+.quick{background:var(--soft);border-radius:10px;padding:9px}
+.quick .n{font-size:9px;color:var(--muted)}
+.quick .v{font-size:15px;font-weight:800;margin-top:3px}
+.chart-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin-bottom:8px}
+.chart-head h2{margin:0;font-size:15px}
+.chart-head .meta{font-size:10px;color:#98a2b3;text-align:right}
+.chartbox{height:370px;position:relative;overflow:hidden;border-radius:12px;background:linear-gradient(to bottom,#fff,#fbfcfd)}
+.chartbox canvas{display:block;width:100%;height:370px;touch-action:pan-y}
+.tip{position:absolute;display:none;pointer-events:none;background:#101828;color:#fff;border-radius:9px;padding:7px 9px;font-size:10px;line-height:1.5;white-space:nowrap;box-shadow:0 6px 18px rgba(16,24,40,.18)}
+.chart-note{font-size:10px;color:#98a2b3;line-height:1.5;margin-top:7px}
+.footer-note{font-size:10px;color:#98a2b3;line-height:1.55;margin-top:11px;padding:0 2px}
+@media(max-width:1180px){
+  .shell{max-width:860px;padding:20px 16px 36px}
+  .sales-layout{grid-template-columns:1fr}
+  .source-grid{grid-template-columns:1fr}
+  .core-grid{grid-template-columns:1fr 1fr 1fr}
+  .dashboard{grid-template-columns:1fr}
+  .chartbox,.chartbox canvas{height:310px}
+  .header{align-items:flex-start}
+}
+@media(max-width:720px){
+  .core-grid{grid-template-columns:1fr}
+  .mini-grid{grid-template-columns:1fr 1fr 1fr}
+}
+@media(max-width:560px){
+  .shell{padding:14px 10px 30px}
+  .header{margin-bottom:14px}.header h1{font-size:23px}.header p{font-size:11px}
+  .site-switch{gap:5px;margin-bottom:8px}.site-btn{padding:6px 9px;font-size:10px}
+  .sales-card,.card-pad,.chart-card{padding:12px}
+  .sales-layout{gap:8px}
+  .sales-main,.forecast-panel{padding:11px}
+  .mode-row{align-items:flex-start}.mode-switch{margin-top:1px}
+  .source-grid{grid-template-columns:1fr;gap:7px}
+  .source-card{padding:10px}
+  .control{padding:13px}
+  .kpis{gap:8px}.kpi{padding:11px;min-height:92px}.kpi .v{font-size:20px}
+  .steps{grid-template-columns:1fr 1fr}.step:not(:last-child):after{display:none}
+  .quick-lines{grid-template-columns:1fr 1fr}
+  .chartbox,.chartbox canvas{height:260px}
+  .section-title small,.chart-head .meta{display:none}
+  .valuebox input{font-size:20px;width:96px}
+}
 </style>
 </head>
 <body>
 <main class="shell">
 <header class="header">
   <div>
-    <div class="site-switch">
+    <div class="site-switch" id="siteSwitch" aria-label="站点切换">
       <button class="site-btn active" type="button" data-site="thehues">TheHues</button>
       <button class="site-btn" type="button" data-site="kgorge">KGORGE</button>
       <button class="site-btn" type="button" data-site="nicetown">NICETOWN</button>
@@ -25,32 +126,94 @@
     <p id="pageDesc">先看销售额怎么来，再看产品毛利、营销和固定支出怎么决定最终利润。</p>
     <div class="site-note" id="siteNote">固定支出默认 ¥300,000 / 月。</div>
   </div>
-  <button class="reset" id="resetBtn" type="button">恢复当前站点默认值</button>
+  <button class="reset" id="resetBtn" type="button">恢复当前站点默认</button>
 </header>
 
-<div class="section-title"><h2>销售额与销售驱动</h2><small>销售额与 Sessions / CVR / AOV 双向联动</small></div>
+<div class="section-title">
+  <h2>销售额与销售驱动</h2>
+  <small>实际复盘与驱动预测分开，避免重复计算</small>
+</div>
 <section class="card sales-card">
+  <div class="mode-row">
+    <div class="mode-copy">
+      <div class="mode-title">销售额口径</div>
+      <div class="mode-hint" id="modeHint">实际模式：利润直接使用月净销售额；下面的拆解只做预测预览。</div>
+    </div>
+    <div class="mode-switch" aria-label="销售额模式">
+      <button class="mode-btn active" id="actualModeBtn" type="button">实际销售额</button>
+      <button class="mode-btn" id="forecastModeBtn" type="button">驱动预测</button>
+    </div>
+  </div>
+
   <div class="sales-layout">
-    <div class="sales-main">
-      <div class="control-top"><span class="label">月净销售额</span><div class="valuebox"><span class="unit">$</span><input id="salesN" type="number" min="10000" max="1000000" step="1000"><span class="unit">USD</span></div></div>
+    <div class="sales-main" id="salesMain">
+      <div class="control-top">
+        <span class="label">月净销售额</span>
+        <div class="valuebox"><span class="unit">$</span><input id="salesN" type="number" min="0" max="1000000" step="1000"><span class="unit">USD</span></div>
+      </div>
       <input id="salesR" type="range" min="10000" max="1000000" step="1000">
       <div class="ends"><span>$10k</span><span>$1m</span></div>
-      <div class="helper">直接改销售额，会按当前 CVR 和 AOV 反推需要的 Sessions。</div>
+      <div class="helper" id="salesHelper">实际模式下直接使用 Shopify 月净销售额。</div>
+      <div class="sales-badge" id="salesBadge">利润基数：实际销售额</div>
     </div>
-    <div class="driver-grid">
-      <div class="driver"><div class="control-top"><span class="label">Sessions</span><div class="valuebox"><input id="sessionsN" type="number" min="1000" max="1000000" step="100"><span class="unit">次</span></div></div><input id="sessionsR" type="range" min="1000" max="300000" step="100"><div class="ends"><span>1k</span><span>300k</span></div></div>
-      <div class="driver"><div class="control-top"><span class="label">整站 CVR</span><div class="valuebox"><input id="cvrN" type="number" min="0.01" max="10" step="0.0001"><span class="unit">%</span></div></div><input id="cvrR" type="range" min="0.01" max="5" step="0.0001"><div class="ends"><span>0.01%</span><span>5%</span></div></div>
-      <div class="driver"><div class="control-top"><span class="label">AOV</span><div class="valuebox"><span class="unit">$</span><input id="aovN" type="number" min="20" max="2000" step="0.01"></div></div><input id="aovR" type="range" min="20" max="1000" step="0.01"><div class="ends"><span>$20</span><span>$1,000</span></div></div>
-      <div class="driver"><div class="control-top"><span class="label">复购率</span><div class="valuebox"><input id="repeatN" type="number" min="0" max="100" step="0.1"><span class="unit">%</span></div></div><input id="repeatR" type="range" min="0" max="60" step="0.1"><div class="ends"><span>0%</span><span>60%</span></div><div class="ref-note">仅参考，不重复增加 GMV。</div></div>
+
+    <div class="forecast-panel">
+      <div class="source-grid">
+        <div class="source-card">
+          <div class="source-head"><div><div class="name">新客直接购买</div><div class="source-sub">Sessions × 新客直购 CVR × AOV</div></div><div class="amount" id="directRevenueOut">—</div></div>
+          <div class="mini-grid">
+            <div class="mini-field"><label>Sessions</label><div class="mini-input"><input id="sessionsN" type="number" min="0" max="1000000" step="100"><span class="mini-unit">次</span></div></div>
+            <div class="mini-field"><label>新客直购 CVR</label><div class="mini-input"><input id="cvrN" type="number" min="0" max="10" step="0.0001"><span class="mini-unit">%</span></div></div>
+            <div class="mini-field"><label>AOV</label><div class="mini-input"><span class="mini-unit">$</span><input id="aovN" type="number" min="0" max="2000" step="0.01"></div></div>
+          </div>
+        </div>
+
+        <div class="source-card">
+          <div class="source-head"><div><div class="name">小样 → 成品</div><div class="source-sub">可转化小样池 × 转化率 × 成品 AOV</div></div><div class="amount" id="sampleRevenueOut">—</div></div>
+          <div class="mini-grid">
+            <div class="mini-field"><label>可转化小样池</label><div class="mini-input"><input id="samplePoolN" type="number" min="0" max="100000" step="1"><span class="mini-unit">人/单</span></div></div>
+            <div class="mini-field"><label>转成品率</label><div class="mini-input"><input id="sampleConvN" type="number" min="0" max="100" step="0.1"><span class="mini-unit">%</span></div></div>
+            <div class="mini-field"><label>成品 AOV</label><div class="mini-input"><span class="mini-unit">$</span><input id="sampleAovN" type="number" min="0" max="2000" step="0.01"></div></div>
+          </div>
+        </div>
+
+        <div class="source-card">
+          <div class="source-head"><div><div class="name">老客户复购</div><div class="source-sub">可复购老客池 × 月复购率 × 老客 AOV</div></div><div class="amount" id="oldRevenueOut">—</div></div>
+          <div class="mini-grid">
+            <div class="mini-field"><label>可复购老客池</label><div class="mini-input"><input id="oldPoolN" type="number" min="0" max="1000000" step="1"><span class="mini-unit">人</span></div></div>
+            <div class="mini-field"><label>月复购率</label><div class="mini-input"><input id="oldRepeatN" type="number" min="0" max="100" step="0.1"><span class="mini-unit">%</span></div></div>
+            <div class="mini-field"><label>老客 AOV</label><div class="mini-input"><span class="mini-unit">$</span><input id="oldAovN" type="number" min="0" max="2000" step="0.01"></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="forecast-total"><div><div class="n">三条收入合计 · 驱动预测销售额</div><div class="forecast-note" id="driverNote">TheHues 旧表已带入可确认的转化率/AOV；两类客户池需按实际口径填写。</div></div><div class="v" id="forecastSalesOut">—</div></div>
     </div>
   </div>
 </section>
 
-<div class="section-title"><h2>利润核心变量</h2><small>只保留三个真正会改变利润结构的输入</small></div>
+<div class="section-title">
+  <h2>利润核心变量</h2>
+  <small>只保留三个真正会改变利润结构的输入</small>
+</div>
 <section class="core-grid">
-  <div class="control"><div class="control-top"><span class="label">产品毛利率</span><div class="valuebox"><input id="grossN" type="number" min="0" max="100" step="0.5"><span class="unit">%</span></div></div><input id="grossR" type="range" min="10" max="90" step="0.5"><div class="ends"><span>10%</span><span>90%</span></div><div class="helper">(售价 − 产品成本) ÷ 售价。</div></div>
-  <div class="control"><div class="control-top"><span class="label">总营销费比</span><div class="valuebox"><input id="marketingN" type="number" min="0" max="100" step="0.5"><span class="unit">%</span></div></div><input id="marketingR" type="range" min="0" max="70" step="0.5"><div class="ends"><span>0%</span><span>70%</span></div><div class="helper">广告 + 网红 + 联盟 + 其他营销 ÷ 净销售额。</div></div>
-  <div class="control"><div class="control-top"><span class="label">固定支出</span><div class="valuebox"><span class="unit">¥</span><input id="fixedN" type="number" min="0" max="2000000" step="10000"><span class="unit">RMB</span></div></div><input id="fixedR" type="range" min="0" max="1000000" step="10000"><div class="ends"><span>¥0</span><span>¥1m</span></div><div class="helper">当前简化模型里，除产品成本和营销外的单月综合固定支出。</div></div>
+  <div class="control">
+    <div class="control-top"><span class="label">产品毛利率</span><div class="valuebox"><input id="grossN" type="number" min="0" max="100" step="0.5"><span class="unit">%</span></div></div>
+    <input id="grossR" type="range" min="10" max="90" step="0.5">
+    <div class="ends"><span>10%</span><span>90%</span></div>
+    <div class="helper">(售价 − 产品成本) ÷ 售价。</div>
+  </div>
+  <div class="control">
+    <div class="control-top"><span class="label">总营销费比</span><div class="valuebox"><input id="marketingN" type="number" min="0" max="100" step="0.5"><span class="unit">%</span></div></div>
+    <input id="marketingR" type="range" min="0" max="70" step="0.5">
+    <div class="ends"><span>0%</span><span>70%</span></div>
+    <div class="helper">广告 + 网红 + 联盟 + 其他营销 ÷ 净销售额。</div>
+  </div>
+  <div class="control">
+    <div class="control-top"><span class="label">固定支出</span><div class="valuebox"><span class="unit">¥</span><input id="fixedN" type="number" min="0" max="2000000" step="10000"><span class="unit">RMB</span></div></div>
+    <input id="fixedR" type="range" min="0" max="1000000" step="10000">
+    <div class="ends"><span>¥0</span><span>¥1m</span></div>
+    <div class="helper">当前简化模型里，除产品成本和营销外的单月综合固定支出。</div>
+  </div>
 </section>
 
 <section class="dashboard">
@@ -63,47 +226,253 @@
       <div class="kpi"><div class="n">盈亏平衡营销费比</div><div class="v" id="beMarketingOut">—</div><div class="s">当前销售额下的最高值</div></div>
     </div>
     <div class="status" id="status">—</div>
-    <div class="waterfall"><div class="waterfall-title">每 $100 净销售额，最后剩多少</div><div class="steps"><div class="step"><div class="n">净销售额</div><div class="v">$100</div></div><div class="step"><div class="n">产品毛利</div><div class="v" id="flowGross">—</div></div><div class="step"><div class="n">扣营销后</div><div class="v" id="flowAfterMkt">—</div></div><div class="step final" id="flowFinalBox"><div class="n">再摊固定支出后</div><div class="v" id="flowFinal">—</div></div></div></div>
-    <div class="quick-lines"><div class="quick"><div class="n">产品毛利润</div><div class="v" id="grossProfitOut">—</div></div><div class="quick"><div class="n">总营销费用</div><div class="v" id="marketingAmtOut">—</div></div></div>
+
+    <div class="waterfall">
+      <div class="waterfall-title">每 $100 净销售额，最后剩多少</div>
+      <div class="steps">
+        <div class="step"><div class="n">净销售额</div><div class="v">$100</div></div>
+        <div class="step"><div class="n">产品毛利</div><div class="v" id="flowGross">—</div></div>
+        <div class="step"><div class="n">扣营销后</div><div class="v" id="flowAfterMkt">—</div></div>
+        <div class="step final" id="flowFinalBox"><div class="n">再摊固定支出后</div><div class="v" id="flowFinal">—</div></div>
+      </div>
+    </div>
+
+    <div class="quick-lines">
+      <div class="quick"><div class="n">产品毛利润</div><div class="v" id="grossProfitOut">—</div></div>
+      <div class="quick"><div class="n">总营销费用</div><div class="v" id="marketingAmtOut">—</div></div>
+    </div>
   </div>
-  <div class="card chart-card"><div class="chart-head"><div><h2>销售额增长 → 经营利润率</h2></div><div class="meta" id="chartMeta">—</div></div><div class="chartbox"><canvas id="chart"></canvas><div class="tip" id="tip"></div></div><div class="chart-note">静态敏感性：假设产品毛利率、营销费比和固定支出保持不变。虚线为盈亏平衡销售额，圆点为当前销售额。</div></div>
+
+  <div class="card chart-card">
+    <div class="chart-head"><div><h2>销售额增长 → 经营利润率</h2></div><div class="meta" id="chartMeta">—</div></div>
+    <div class="chartbox"><canvas id="chart"></canvas><div class="tip" id="tip"></div></div>
+    <div class="chart-note">静态敏感性：假设产品毛利率、营销费比和固定支出保持不变。虚线为盈亏平衡销售额，圆点为当前销售额。</div>
+  </div>
 </section>
-<div class="footer-note">口径：净销售额以 USD 输入，固定支出以 RMB 输入，内部按 1 USD = ¥6.72 换算。产品毛利率 = 1 − 产品成本率；营销费用按净销售额计算。销售驱动是快速估算，实际经营应以 Shopify 财务口径为准。三个站点共用公式，但各站输入状态彼此独立。</div>
+
+<div class="footer-note">简化口径：经营利润率 = 产品毛利率 − 总营销费比 − 固定成本率。实际模式直接使用月净销售额；驱动预测模式才使用「新客直购 + 小样转成品 + 老客复购」三项相加，避免与整站销售额重复计算。若物流、支付、售后等既不包含在产品成本，也不包含在固定支出中，模型会高估利润。</div>
 </main>
+
 <script>
 const $=id=>document.getElementById(id);
-let locked=false,S={},activeSite='thehues';
+let locked=false,S={},activeSite='thehues',currentMode='actual';
+
 const SITE_CONFIG={
-  thehues:{label:'TheHues',desc:'先看销售额怎么来，再看产品毛利、营销和固定支出怎么决定最终利润。',note:'固定支出默认 ¥300,000 / 月。',defaults:{sales:150000,sessions:76612,cvr:.4769,aov:410.55,repeat:17,gross:60,marketing:42,fixed:300000}},
-  kgorge:{label:'KGORGE',desc:'季节性站点：公式不变，销售额、流量、CVR、AOV 和营销费比按当月实际情况更新。',note:'默认销售额 $90,000；固定支出 ¥130,000 / 月。其他参数可按当月实际更新。',defaults:{sales:90000,sessions:45967.31,cvr:.4769,aov:410.55,repeat:17,gross:60,marketing:42,fixed:130000}},
-  nicetown:{label:'NICETOWN',desc:'规模较小，但利润公式与其他站点一致；按当月实际经营数据更新即可。',note:'默认销售额 $30,000；固定支出 ¥50,000 / 月。其他参数可按当月实际更新。',defaults:{sales:30000,sessions:15322.44,cvr:.4769,aov:410.55,repeat:17,gross:60,marketing:42,fixed:50000}}
+  thehues:{
+    label:'TheHues',
+    desc:'实际复盘看月净销售额；做预测时，可拆成新客直购、小样转成品和老客复购三条收入。',
+    note:'固定支出默认 ¥300,000 / 月。',
+    driverNote:'旧表可确认：小样转成品率 31%、小样成品 AOV $400、老客复购率 17%、老客 AOV $410.55；可转化小样池与可复购老客池口径不可靠，先留 0 等实际数据。',
+    defaults:{sales:150000,sessions:76612,cvr:.4769,aov:410.55,samplePool:0,sampleConv:31,sampleAov:400,oldPool:0,oldRepeat:17,oldAov:410.55,gross:60,marketing:42,fixed:300000,mode:'actual'}
+  },
+  kgorge:{
+    label:'KGORGE',
+    desc:'季节性站点：利润公式不变；不同月份只需要更新销售驱动、毛利、营销费比和固定支出。',
+    note:'默认销售额 $90,000；固定支出 ¥130,000 / 月。',
+    driverNote:'目前没有可靠的小样/老客池数据，默认都为 0；没有小样业务时保持 0 即可。',
+    defaults:{sales:90000,sessions:45967.31,cvr:.4769,aov:410.55,samplePool:0,sampleConv:0,sampleAov:400,oldPool:0,oldRepeat:0,oldAov:410.55,gross:60,marketing:42,fixed:130000,mode:'actual'}
+  },
+  nicetown:{
+    label:'NICETOWN',
+    desc:'规模较小，但同样可以用新客、复购等驱动拆解销售额；利润公式与其他站点一致。',
+    note:'默认销售额 $30,000；固定支出 ¥50,000 / 月。',
+    driverNote:'目前没有可靠的小样/老客池数据，默认都为 0；没有小样业务时保持 0 即可。',
+    defaults:{sales:30000,sessions:15322.44,cvr:.4769,aov:410.55,samplePool:0,sampleConv:0,sampleAov:400,oldPool:0,oldRepeat:0,oldAov:410.55,gross:60,marketing:42,fixed:50000,mode:'actual'}
+  }
 };
-const D={sales:{n:'salesN',r:'salesR',v:150000,min:10000,max:1000000},sessions:{n:'sessionsN',r:'sessionsR',v:76612,min:1000,max:1000000},cvr:{n:'cvrN',r:'cvrR',v:.4769,min:.01,max:10},aov:{n:'aovN',r:'aovR',v:410.55,min:20,max:2000},repeat:{n:'repeatN',r:'repeatR',v:17,min:0,max:100},gross:{n:'grossN',r:'grossR',v:60,min:0,max:100},marketing:{n:'marketingN',r:'marketingR',v:42,min:0,max:100},fixed:{n:'fixedN',r:'fixedR',v:300000,min:0,max:2000000}};
-const siteStates=Object.fromEntries(Object.entries(SITE_CONFIG).map(([k,v])=>[k,{...v.defaults}]));
+
+const D={
+  sales:{n:'salesN',r:'salesR',v:150000,min:0,max:1000000},
+  sessions:{n:'sessionsN',v:76612,min:0,max:1000000},
+  cvr:{n:'cvrN',v:.4769,min:0,max:10},
+  aov:{n:'aovN',v:410.55,min:0,max:2000},
+  samplePool:{n:'samplePoolN',v:0,min:0,max:100000},
+  sampleConv:{n:'sampleConvN',v:31,min:0,max:100},
+  sampleAov:{n:'sampleAovN',v:400,min:0,max:2000},
+  oldPool:{n:'oldPoolN',v:0,min:0,max:1000000},
+  oldRepeat:{n:'oldRepeatN',v:17,min:0,max:100},
+  oldAov:{n:'oldAovN',v:410.55,min:0,max:2000},
+  gross:{n:'grossN',r:'grossR',v:60,min:0,max:100},
+  marketing:{n:'marketingN',r:'marketingR',v:42,min:0,max:100},
+  fixed:{n:'fixedN',r:'fixedR',v:300000,min:0,max:2000000}
+};
+const siteStates=Object.fromEntries(Object.entries(SITE_CONFIG).map(([k,cfg])=>[k,{...cfg.defaults,manualSales:cfg.defaults.sales}]));
 const FX=6.72;
+
 function clamp(v,a,b){return Math.min(b,Math.max(a,v))}
-function setVal(k,v){const c=D[k];v=clamp(Number(v)||0,c.min,c.max);c.v=v;const n=$(c.n),r=$(c.r);if(n)n.value=Number.isInteger(v)?v:(k==='cvr'?v.toFixed(4):v.toFixed(2));if(r)r.value=clamp(v,+r.min,+r.max)}
+function setVal(k,v){
+  const c=D[k]; v=clamp(Number(v)||0,c.min,c.max); c.v=v;
+  const n=$(c.n),r=c.r?$(c.r):null;
+  if(n){
+    if(k==='cvr')n.value=v.toFixed(4);
+    else if(['aov','sampleAov','oldAov'].includes(k))n.value=v.toFixed(2);
+    else if(['sampleConv','oldRepeat','gross','marketing'].includes(k))n.value=Number.isInteger(v)?v:v.toFixed(1);
+    else n.value=Number.isInteger(v)?v:v.toFixed(2);
+  }
+  if(r)r.value=clamp(v,+r.min,+r.max);
+}
 Object.keys(D).forEach(k=>setVal(k,D[k].v));
-function currentValues(){return Object.fromEntries(Object.keys(D).map(k=>[k,D[k].v]))}
-function saveActiveSite(){siteStates[activeSite]={...currentValues()}}
-function updateSiteHeader(){const cfg=SITE_CONFIG[activeSite];$('pageTitle').textContent=cfg.label+' 单月经营模型';$('pageDesc').textContent=cfg.desc;$('siteNote').textContent=cfg.note;document.querySelectorAll('.site-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.site===activeSite))}
-function loadSite(siteKey){if(!SITE_CONFIG[siteKey]||siteKey===activeSite)return;saveActiveSite();activeSite=siteKey;Object.entries(siteStates[activeSite]).forEach(([k,v])=>setVal(k,v));updateSiteHeader();calc('sales')}
+
+function numericValues(){return Object.fromEntries(Object.keys(D).map(k=>[k,D[k].v]))}
+function saveActiveSite(){
+  const prev=siteStates[activeSite]||{};
+  siteStates[activeSite]={...numericValues(),mode:currentMode,manualSales:prev.manualSales??D.sales.v};
+}
+function updateSiteHeader(){
+  const cfg=SITE_CONFIG[activeSite];
+  $('pageTitle').textContent=cfg.label+' 单月经营模型';
+  $('pageDesc').textContent=cfg.desc;
+  $('siteNote').textContent=cfg.note;
+  $('driverNote').textContent=cfg.driverNote;
+  document.querySelectorAll('.site-btn').forEach(btn=>btn.classList.toggle('active',btn.dataset.site===activeSite));
+}
+function loadSite(siteKey){
+  if(!SITE_CONFIG[siteKey]||siteKey===activeSite)return;
+  saveActiveSite();
+  activeSite=siteKey;
+  const st=siteStates[activeSite]; currentMode=st.mode||'actual';
+  Object.keys(D).forEach(k=>setVal(k,st[k]??SITE_CONFIG[activeSite].defaults[k]??0));
+  if(currentMode==='actual')setVal('sales',st.manualSales??st.sales);
+  updateSiteHeader();
+  calc('load');
+}
+
 const usd=v=>(v<0?'-':'')+'$'+Math.abs(v).toLocaleString('en-US',{maximumFractionDigits:0});
 const rmb=v=>(v<0?'-':'')+'¥'+Math.abs(v).toLocaleString('zh-CN',{maximumFractionDigits:0});
 const pct=v=>Number.isFinite(v)?v.toFixed(1)+'%':'—';
 const short=v=>'$'+(v>=1000?(v/1000).toFixed(v>=100000?0:1)+'k':Math.round(v));
-function salesFromDrivers(){return D.sessions.v*(D.cvr.v/100)*D.aov.v}
-function sessionsForSales(sales){const den=(D.cvr.v/100)*D.aov.v;return den>0?sales/den:0}
-function calc(source){if(locked)return;locked=true;if(source==='sales'){setVal('sessions',sessionsForSales(D.sales.v))}else if(source==='driver'){setVal('sales',salesFromDrivers())}const sales=D.sales.v,rev=sales*FX,gross=D.gross.v/100,marketing=D.marketing.v/100,fixed=D.fixed.v;const grossProfit=rev*gross,marketingAmt=rev*marketing,profit=grossProfit-marketingAmt-fixed;const margin=rev>0?profit/rev:0,fixedRate=rev>0?fixed/rev:0;const spread=gross-marketing;const beSales=spread>0?fixed/spread/FX:Infinity;const beMarketing=gross-fixedRate;S={sales,rev,gross,marketing,fixed,grossProfit,marketingAmt,profit,margin,fixedRate,beSales,beMarketing};siteStates[activeSite]={...currentValues()};render();locked=false}
-function render(){const s=S;$('salesRmbSmall').textContent='≈ '+rmb(s.rev);$('profitOut').textContent=rmb(s.profit);$('profitUsdOut').textContent='≈ '+usd(s.profit/FX);$('marginOut').textContent=pct(s.margin*100);$('beSalesOut').textContent=Number.isFinite(s.beSales)?short(s.beSales):'不可达';$('beMarketingOut').textContent=pct(s.beMarketing*100);$('profitOut').className='v '+(s.profit>=0?'positive':'negative');$('marginOut').className='v '+(s.margin>=0?'positive':'negative');const st=$('status');if(s.profit>=0){st.style.background='var(--goodbg)';st.style.color='var(--good)';st.textContent='当前单月盈利 '+rmb(s.profit)+'。'}else{st.style.background='var(--badbg)';st.style.color='var(--bad)';st.textContent='当前单月亏损 '+rmb(Math.abs(s.profit))+'；按当前结构，盈亏平衡销售额约 '+(Number.isFinite(s.beSales)?short(s.beSales):'不可达')+'。'}const afterMkt=(s.gross-s.marketing)*100;$('flowGross').textContent='$'+(s.gross*100).toFixed(0);$('flowAfterMkt').textContent='$'+afterMkt.toFixed(1);$('flowFinal').textContent=(s.margin>=0?'$':'-$')+Math.abs(s.margin*100).toFixed(1);const box=$('flowFinalBox');box.className='step final '+(s.margin>=0?'good':'bad');$('grossProfitOut').textContent=rmb(s.grossProfit);$('marketingAmtOut').textContent=rmb(s.marketingAmt);$('chartMeta').textContent='毛利 '+pct(s.gross*100)+' · 营销 '+pct(s.marketing*100)+' · 固定 '+rmb(s.fixed);drawChart()}
+
+function forecastBreakdown(){
+  const direct=D.sessions.v*(D.cvr.v/100)*D.aov.v;
+  const sample=D.samplePool.v*(D.sampleConv.v/100)*D.sampleAov.v;
+  const old=D.oldPool.v*(D.oldRepeat.v/100)*D.oldAov.v;
+  return{direct,sample,old,total:direct+sample+old};
+}
+function renderMode(){
+  const isForecast=currentMode==='forecast';
+  $('actualModeBtn').classList.toggle('active',!isForecast);
+  $('forecastModeBtn').classList.toggle('active',isForecast);
+  $('salesN').disabled=isForecast;$('salesR').disabled=isForecast;
+  $('salesMain').classList.toggle('is-forecast',isForecast);
+  $('salesBadge').classList.toggle('active',isForecast);
+  $('salesBadge').textContent=isForecast?'利润基数：驱动预测销售额':'利润基数：实际销售额';
+  $('modeHint').textContent=isForecast?'驱动预测：总销售额 = 新客直购 + 小样转成品 + 老客复购；三项直接进入利润模型。':'实际模式：利润直接使用月净销售额；右侧三条收入只做预测预览，不会重复加到销售额。';
+  $('salesHelper').textContent=isForecast?'当前销售额由右侧三条收入自动计算，不能手动修改。':'实际模式下直接使用 Shopify 月净销售额。';
+}
+function switchMode(mode){
+  if(mode===currentMode)return;
+  const st=siteStates[activeSite];
+  if(mode==='forecast'){
+    st.manualSales=D.sales.v;
+    currentMode='forecast';
+  }else{
+    currentMode='actual';
+    setVal('sales',st.manualSales??SITE_CONFIG[activeSite].defaults.sales);
+  }
+  calc('mode');
+}
+
+function calc(source){
+  if(locked)return; locked=true;
+  const f=forecastBreakdown();
+  if(currentMode==='forecast')setVal('sales',f.total);
+  else if(source==='sales')siteStates[activeSite].manualSales=D.sales.v;
+
+  const sales=D.sales.v,rev=sales*FX,gross=D.gross.v/100,marketing=D.marketing.v/100,fixed=D.fixed.v;
+  const grossProfit=rev*gross,marketingAmt=rev*marketing,profit=grossProfit-marketingAmt-fixed;
+  const margin=rev>0?profit/rev:0,fixedRate=rev>0?fixed/rev:0;
+  const spread=gross-marketing;
+  const beSales=spread>0?fixed/spread/FX:Infinity;
+  const beMarketing=gross-fixedRate;
+  S={sales,rev,gross,marketing,fixed,grossProfit,marketingAmt,profit,margin,fixedRate,beSales,beMarketing,forecast:f};
+  const prev=siteStates[activeSite];
+  siteStates[activeSite]={...numericValues(),mode:currentMode,manualSales:prev.manualSales??D.sales.v};
+  render();renderMode();locked=false;
+}
+
+function render(){
+  const s=S,f=s.forecast;
+  $('directRevenueOut').textContent=usd(f.direct);
+  $('sampleRevenueOut').textContent=usd(f.sample);
+  $('oldRevenueOut').textContent=usd(f.old);
+  $('forecastSalesOut').textContent=usd(f.total);
+  $('salesRmbSmall').textContent='≈ '+rmb(s.rev);
+  $('profitOut').textContent=rmb(s.profit);
+  $('profitUsdOut').textContent='≈ '+usd(s.profit/FX);
+  $('marginOut').textContent=pct(s.margin*100);
+  $('beSalesOut').textContent=Number.isFinite(s.beSales)?short(s.beSales):'不可达';
+  $('beMarketingOut').textContent=pct(s.beMarketing*100);
+  $('profitOut').className='v '+(s.profit>=0?'positive':'negative');
+  $('marginOut').className='v '+(s.margin>=0?'positive':'negative');
+
+  const st=$('status');
+  if(s.profit>=0){
+    st.style.background='var(--goodbg)';st.style.color='var(--good)';
+    st.textContent='当前单月盈利 '+rmb(s.profit)+'。';
+  }else{
+    st.style.background='var(--badbg)';st.style.color='var(--bad)';
+    st.textContent='当前单月亏损 '+rmb(Math.abs(s.profit))+'；按当前结构，盈亏平衡销售额约 '+(Number.isFinite(s.beSales)?short(s.beSales):'不可达')+'。';
+  }
+
+  const afterMkt=(s.gross-s.marketing)*100;
+  $('flowGross').textContent='$'+(s.gross*100).toFixed(0);
+  $('flowAfterMkt').textContent='$'+afterMkt.toFixed(1);
+  $('flowFinal').textContent=(s.margin>=0?'$':'-$')+Math.abs(s.margin*100).toFixed(1);
+  $('flowFinalBox').className='step final '+(s.margin>=0?'good':'bad');
+  $('grossProfitOut').textContent=rmb(s.grossProfit);
+  $('marketingAmtOut').textContent=rmb(s.marketingAmt);
+  $('chartMeta').textContent='毛利 '+pct(s.gross*100)+' · 营销 '+pct(s.marketing*100)+' · 固定 '+rmb(s.fixed);
+  drawChart();
+}
+
 function marginAt(sales){if(sales<=0)return 0;return S.gross-S.marketing-S.fixed/(sales*FX)}
-function drawChart(){const c=$('chart'),box=c.getBoundingClientRect(),dpr=window.devicePixelRatio||1,w=box.width,h=box.height;c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);const x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);const p={l:46,r:14,t:16,b:30};const xmin=20000;const xmax=Math.max(500000,S.sales*1.45,Number.isFinite(S.beSales)?S.beSales*1.25:0);const pts=[];for(let i=0;i<=120;i++){const g=xmin+(xmax-xmin)*i/120;pts.push({g,y:marginAt(g)*100})}let ymin=Math.min(-40,Math.floor(Math.min(...pts.map(v=>v.y))/10)*10);let ymax=Math.max(25,Math.ceil(Math.max(...pts.map(v=>v.y))/10)*10);const iw=w-p.l-p.r,ih=h-p.t-p.b;const X=g=>p.l+(g-xmin)/(xmax-xmin)*iw;const Y=y=>p.t+(ymax-y)/(ymax-ymin)*ih;x.clearRect(0,0,w,h);if(ymax>0){x.fillStyle='rgba(6,118,71,.035)';x.fillRect(p.l,p.t,iw,Math.max(0,Y(0)-p.t))}if(ymin<0){x.fillStyle='rgba(180,35,24,.03)';x.fillRect(p.l,Y(0),iw,Math.max(0,h-p.b-Y(0)))}x.font='10px -apple-system,system-ui';x.fillStyle='#98a2b3';x.strokeStyle='#eaecf0';x.lineWidth=1;for(let y=Math.ceil(ymin/10)*10;y<=ymax;y+=10){const py=Y(y);x.beginPath();x.moveTo(p.l,py);x.lineTo(w-p.r,py);x.stroke();x.fillText(y+'%',4,py+3)}for(let i=0;i<=4;i++){const g=xmin+(xmax-xmin)*i/4;x.fillText(short(g),Math.max(2,X(g)-16),h-8)}if(ymin<0&&ymax>0){x.strokeStyle='#98a2b3';x.lineWidth=1.4;x.beginPath();x.moveTo(p.l,Y(0));x.lineTo(w-p.r,Y(0));x.stroke()}if(Number.isFinite(S.beSales)&&S.beSales>=xmin&&S.beSales<=xmax){const bx=X(S.beSales);x.save();x.setLineDash([5,5]);x.strokeStyle='#98a2b3';x.lineWidth=1.2;x.beginPath();x.moveTo(bx,p.t);x.lineTo(bx,h-p.b);x.stroke();x.restore();x.fillStyle='#667085';x.fillText('盈亏平衡 '+short(S.beSales),Math.min(w-100,bx+6),p.t+12)}x.strokeStyle='#111827';x.lineWidth=2.8;x.beginPath();pts.forEach((v,i)=>i?x.lineTo(X(v.g),Y(v.y)):x.moveTo(X(v.g),Y(v.y)));x.stroke();const cy=marginAt(S.sales)*100;x.fillStyle=cy>=0?'#067647':'#b42318';x.beginPath();x.arc(X(S.sales),Y(cy),5.5,0,Math.PI*2);x.fill();x.fillStyle='#344054';x.fillText('当前 '+short(S.sales),Math.min(w-82,X(S.sales)+8),Math.max(18,Y(cy)-8));c._map={p,w,h,xmin,xmax,X,Y}}
-function inspect(ev){const c=$('chart'),m=c._map;if(!m)return;const r=c.getBoundingClientRect();const cx=(ev.touches?ev.touches[0].clientX:ev.clientX)-r.left;if(cx<m.p.l||cx>m.w-m.p.r){$('tip').style.display='none';return}const g=m.xmin+(cx-m.p.l)/(m.w-m.p.l-m.p.r)*(m.xmax-m.xmin);const y=marginAt(g)*100,tip=$('tip');tip.innerHTML='净销售额 <b>'+short(g)+'</b><br>经营利润率 <b>'+pct(y)+'</b>';tip.style.display='block';tip.style.left=Math.min(m.w-118,Math.max(2,cx+7))+'px';tip.style.top=Math.max(2,Math.min(m.h-45,m.Y(y)-21))+'px'}
-function bind(k,type){const c=D[k],n=$(c.n),r=$(c.r);n.addEventListener('input',()=>{setVal(k,n.value);calc(type)});if(r)r.addEventListener('input',()=>{setVal(k,r.value);calc(type)})}
-bind('sales','sales');['sessions','cvr','aov'].forEach(k=>bind(k,'driver'));['repeat','gross','marketing','fixed'].forEach(k=>bind(k,'other'));
-document.querySelectorAll('.site-btn').forEach(btn=>{btn.addEventListener('click',()=>loadSite(btn.dataset.site))});
-$('resetBtn').addEventListener('click',()=>{siteStates[activeSite]={...SITE_CONFIG[activeSite].defaults};Object.entries(siteStates[activeSite]).forEach(([k,v])=>setVal(k,v));calc('sales')});
-['pointerdown','pointermove'].forEach(e=>$('chart').addEventListener(e,inspect));$('chart').addEventListener('pointerleave',()=>$('tip').style.display='none');window.addEventListener('resize',drawChart);updateSiteHeader();calc('sales');
+function drawChart(){
+  const c=$('chart'),box=c.getBoundingClientRect(),dpr=window.devicePixelRatio||1,w=box.width,h=box.height;
+  c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);
+  const x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);
+  const p={l:46,r:14,t:16,b:30},xmin=20000;
+  const xmax=Math.max(500000,S.sales*1.45,Number.isFinite(S.beSales)?S.beSales*1.25:0);
+  const pts=[];for(let i=0;i<=120;i++){const g=xmin+(xmax-xmin)*i/120;pts.push({g,y:marginAt(g)*100})}
+  const ymin=Math.min(-40,Math.floor(Math.min(...pts.map(v=>v.y))/10)*10),ymax=Math.max(25,Math.ceil(Math.max(...pts.map(v=>v.y))/10)*10);
+  const iw=w-p.l-p.r,ih=h-p.t-p.b,X=g=>p.l+(g-xmin)/(xmax-xmin)*iw,Y=y=>p.t+(ymax-y)/(ymax-ymin)*ih;
+  x.clearRect(0,0,w,h);
+  if(ymax>0){x.fillStyle='rgba(6,118,71,.035)';x.fillRect(p.l,p.t,iw,Math.max(0,Y(0)-p.t))}
+  if(ymin<0){x.fillStyle='rgba(180,35,24,.03)';x.fillRect(p.l,Y(0),iw,Math.max(0,h-p.b-Y(0)))}
+  x.font='10px -apple-system,system-ui';x.fillStyle='#98a2b3';x.strokeStyle='#eaecf0';x.lineWidth=1;
+  for(let y=Math.ceil(ymin/10)*10;y<=ymax;y+=10){const py=Y(y);x.beginPath();x.moveTo(p.l,py);x.lineTo(w-p.r,py);x.stroke();x.fillText(y+'%',4,py+3)}
+  for(let i=0;i<=4;i++){const g=xmin+(xmax-xmin)*i/4;x.fillText(short(g),Math.max(2,X(g)-16),h-8)}
+  if(ymin<0&&ymax>0){x.strokeStyle='#98a2b3';x.lineWidth=1.4;x.beginPath();x.moveTo(p.l,Y(0));x.lineTo(w-p.r,Y(0));x.stroke()}
+  if(Number.isFinite(S.beSales)&&S.beSales>=xmin&&S.beSales<=xmax){const bx=X(S.beSales);x.save();x.setLineDash([5,5]);x.strokeStyle='#98a2b3';x.lineWidth=1.2;x.beginPath();x.moveTo(bx,p.t);x.lineTo(bx,h-p.b);x.stroke();x.restore();x.fillStyle='#667085';x.fillText('盈亏平衡 '+short(S.beSales),Math.min(w-100,bx+6),p.t+12)}
+  x.strokeStyle='#111827';x.lineWidth=2.8;x.beginPath();pts.forEach((v,i)=>i?x.lineTo(X(v.g),Y(v.y)):x.moveTo(X(v.g),Y(v.y)));x.stroke();
+  if(S.sales>=xmin){const cy=marginAt(S.sales)*100;x.fillStyle=cy>=0?'#067647':'#b42318';x.beginPath();x.arc(X(S.sales),Y(cy),5.5,0,Math.PI*2);x.fill();x.fillStyle='#344054';x.fillText('当前 '+short(S.sales),Math.min(w-82,X(S.sales)+8),Math.max(18,Y(cy)-8))}
+  c._map={p,w,h,xmin,xmax,X,Y};
+}
+function inspect(ev){
+  const c=$('chart'),m=c._map;if(!m)return;const r=c.getBoundingClientRect();const cx=(ev.touches?ev.touches[0].clientX:ev.clientX)-r.left;
+  if(cx<m.p.l||cx>m.w-m.p.r){$('tip').style.display='none';return}
+  const g=m.xmin+(cx-m.p.l)/(m.w-m.p.l-m.p.r)*(m.xmax-m.xmin),y=marginAt(g)*100,tip=$('tip');
+  tip.innerHTML='净销售额 <b>'+short(g)+'</b><br>经营利润率 <b>'+pct(y)+'</b>';tip.style.display='block';tip.style.left=Math.min(m.w-118,Math.max(2,cx+7))+'px';tip.style.top=Math.max(2,Math.min(m.h-45,m.Y(y)-21))+'px';
+}
+
+function bind(k,type){
+  const c=D[k],n=$(c.n),r=c.r?$(c.r):null;
+  n.addEventListener('input',()=>{setVal(k,n.value);calc(type)});
+  if(r)r.addEventListener('input',()=>{setVal(k,r.value);calc(type)});
+}
+bind('sales','sales');
+['sessions','cvr','aov','samplePool','sampleConv','sampleAov','oldPool','oldRepeat','oldAov'].forEach(k=>bind(k,'driver'));
+['gross','marketing','fixed'].forEach(k=>bind(k,'other'));
+$('actualModeBtn').addEventListener('click',()=>switchMode('actual'));
+$('forecastModeBtn').addEventListener('click',()=>switchMode('forecast'));
+document.querySelectorAll('.site-btn').forEach(btn=>btn.addEventListener('click',()=>loadSite(btn.dataset.site)));
+$('resetBtn').addEventListener('click',()=>{
+  const cfg=SITE_CONFIG[activeSite];siteStates[activeSite]={...cfg.defaults,manualSales:cfg.defaults.sales};currentMode=cfg.defaults.mode;
+  Object.keys(D).forEach(k=>setVal(k,siteStates[activeSite][k]??0));updateSiteHeader();calc('reset');
+});
+['pointerdown','pointermove'].forEach(e=>$('chart').addEventListener(e,inspect));
+$('chart').addEventListener('pointerleave',()=>$('tip').style.display='none');
+window.addEventListener('resize',drawChart);
+updateSiteHeader();renderMode();calc('load');
 </script>
 </body>
 </html>
