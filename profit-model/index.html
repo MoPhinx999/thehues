@@ -34,9 +34,9 @@ button,input{font:inherit}
 .mode-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}
 .mode-copy{min-width:0}.mode-title{font-size:11px;font-weight:800;color:#344054}.mode-hint{font-size:9px;color:#98a2b3;margin-top:3px;line-height:1.4}
 .mode-switch{display:flex;gap:3px;padding:3px;background:var(--soft);border:1px solid var(--line);border-radius:999px;flex:0 0 auto}.mode-btn{border:0;background:transparent;color:#667085;border-radius:999px;padding:6px 10px;font-size:10px;font-weight:750;cursor:pointer}.mode-btn.active{background:#fff;color:#101828;box-shadow:0 1px 2px rgba(16,24,40,.10)}
-.sales-layout{display:grid;grid-template-columns:minmax(290px,.58fr) minmax(760px,1.72fr);gap:12px;align-items:stretch}
+.sales-layout{display:grid;grid-template-columns:1fr;gap:10px;align-items:stretch}
 .sales-main{padding:15px;border:1px solid var(--line);border-radius:14px;background:#fff;transition:.15s}.sales-main.is-forecast{background:var(--soft)}.sales-main.is-forecast input{cursor:not-allowed}.sales-badge{display:inline-flex;margin-top:9px;padding:5px 8px;border-radius:999px;background:var(--soft);color:#667085;font-size:9px;font-weight:700}.sales-badge.active{background:#eef4ff;color:#3538cd}
-.forecast-panel{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}.source-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.source-card{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}.source-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:9px}.source-head .name{font-size:11px;font-weight:800}.source-head .amount{font-size:13px;font-weight:850;white-space:nowrap}.source-sub{font-size:9px;color:#98a2b3;margin-top:2px;line-height:1.35}.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.mini-field{background:var(--soft);border-radius:9px;padding:7px}.mini-field label{display:block;font-size:8px;color:#667085;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mini-field .mini-input{display:flex;align-items:center;gap:2px}.mini-field input{min-width:0;width:100%;border:0;outline:0;background:transparent;font-size:13px;font-weight:800;color:#101828;padding:0}.mini-field .mini-unit{font-size:8px;color:#98a2b3}.forecast-total{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:9px;padding:10px 11px;border-radius:11px;background:var(--soft)}.forecast-total .n{font-size:9px;color:#667085}.forecast-total .v{font-size:17px;font-weight:850}.forecast-note{font-size:9px;color:#98a2b3;line-height:1.45;margin-top:7px}
+.driver-details{border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden}.driver-details summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 14px;cursor:pointer;user-select:none}.driver-details summary::-webkit-details-marker{display:none}.driver-details summary:hover{background:var(--soft)}.driver-summary-title{font-size:11px;font-weight:800;color:#344054}.driver-summary-sub{font-size:9px;color:#98a2b3;margin-top:3px;line-height:1.4}.driver-summary-right{display:flex;align-items:center;gap:8px;flex:0 0 auto}.driver-summary-amount{font-size:14px;font-weight:850;color:#101828}.driver-summary-status{font-size:9px;font-weight:700;color:#667085;background:var(--soft);border-radius:999px;padding:4px 7px}.driver-summary-status.active{background:#eef4ff;color:#3538cd}.driver-chevron{font-size:13px;color:#98a2b3;transition:transform .18s ease}.driver-details[open] .driver-chevron{transform:rotate(180deg)}.driver-details-body{padding:0 12px 12px;border-top:1px solid var(--line)}.driver-details-body .mode-row{margin:0 0 10px;padding:11px 0 10px}.forecast-panel{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fff}.source-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.source-card{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}.source-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:9px}.source-head .name{font-size:11px;font-weight:800}.source-head .amount{font-size:13px;font-weight:850;white-space:nowrap}.source-sub{font-size:9px;color:#98a2b3;margin-top:2px;line-height:1.35}.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.mini-field{background:var(--soft);border-radius:9px;padding:7px}.mini-field label{display:block;font-size:8px;color:#667085;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mini-field .mini-input{display:flex;align-items:center;gap:2px}.mini-field input{min-width:0;width:100%;border:0;outline:0;background:transparent;font-size:13px;font-weight:800;color:#101828;padding:0}.mini-field .mini-unit{font-size:8px;color:#98a2b3}.forecast-total{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:9px;padding:10px 11px;border-radius:11px;background:var(--soft)}.forecast-total .n{font-size:9px;color:#667085}.forecast-total .v{font-size:17px;font-weight:850}.forecast-note{font-size:9px;color:#98a2b3;line-height:1.45;margin-top:7px}
 .control-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
 .label{font-size:12px;font-weight:750}
 .valuebox{display:flex;align-items:center;gap:4px;white-space:nowrap}
@@ -110,6 +110,7 @@ input[type=range]::-moz-range-thumb{width:19px;height:19px;border-radius:50%;bac
   .chartbox,.chartbox canvas{height:260px}
   .section-title small,.chart-head .meta{display:none}
   .valuebox input{font-size:20px;width:96px}
+  .driver-details summary{padding:11px 10px;align-items:flex-start}.driver-summary-right{gap:5px}.driver-summary-amount{font-size:12px}.driver-summary-status{display:none}
 }
 </style>
 </head>
@@ -134,17 +135,6 @@ input[type=range]::-moz-range-thumb{width:19px;height:19px;border-radius:50%;bac
   <small>实际复盘与驱动预测分开，避免重复计算</small>
 </div>
 <section class="card sales-card">
-  <div class="mode-row">
-    <div class="mode-copy">
-      <div class="mode-title">销售额口径</div>
-      <div class="mode-hint" id="modeHint">实际模式：利润直接使用月净销售额；下面的拆解只做预测预览。</div>
-    </div>
-    <div class="mode-switch" aria-label="销售额模式">
-      <button class="mode-btn active" id="actualModeBtn" type="button">实际销售额</button>
-      <button class="mode-btn" id="forecastModeBtn" type="button">驱动预测</button>
-    </div>
-  </div>
-
   <div class="sales-layout">
     <div class="sales-main" id="salesMain">
       <div class="control-top">
@@ -157,7 +147,31 @@ input[type=range]::-moz-range-thumb{width:19px;height:19px;border-radius:50%;bac
       <div class="sales-badge" id="salesBadge">利润基数：实际销售额</div>
     </div>
 
-    <div class="forecast-panel">
+    <details class="driver-details" id="driverDetails">
+      <summary>
+        <div>
+          <div class="driver-summary-title">销售驱动预测</div>
+          <div class="driver-summary-sub">新客直购 + 小样转成品 + 老客复购 · 点击展开</div>
+        </div>
+        <div class="driver-summary-right">
+          <span class="driver-summary-amount" id="driverSummaryAmount">—</span>
+          <span class="driver-summary-status" id="driverSummaryStatus">仅预测预览</span>
+          <span class="driver-chevron">⌄</span>
+        </div>
+      </summary>
+      <div class="driver-details-body">
+        <div class="mode-row">
+          <div class="mode-copy">
+            <div class="mode-title">销售额口径</div>
+            <div class="mode-hint" id="modeHint">实际模式：利润直接使用月净销售额；下面的拆解只做预测预览。</div>
+          </div>
+          <div class="mode-switch" aria-label="销售额模式">
+            <button class="mode-btn active" id="actualModeBtn" type="button">实际销售额</button>
+            <button class="mode-btn" id="forecastModeBtn" type="button">驱动预测</button>
+          </div>
+        </div>
+
+        <div class="forecast-panel">
       <div class="source-grid">
         <div class="source-card">
           <div class="source-head"><div><div class="name">新客直接购买</div><div class="source-sub">Sessions × 新客直购 CVR × AOV</div></div><div class="amount" id="directRevenueOut">—</div></div>
@@ -186,8 +200,10 @@ input[type=range]::-moz-range-thumb{width:19px;height:19px;border-radius:50%;bac
           </div>
         </div>
       </div>
-      <div class="forecast-total"><div><div class="n">三条收入合计 · 驱动预测销售额</div><div class="forecast-note" id="driverNote">TheHues 旧表已带入可确认的转化率/AOV；两类客户池需按实际口径填写。</div></div><div class="v" id="forecastSalesOut">—</div></div>
-    </div>
+          <div class="forecast-total"><div><div class="n">三条收入合计 · 驱动预测销售额</div><div class="forecast-note" id="driverNote">TheHues 旧表已带入可确认的转化率/AOV；两类客户池需按实际口径填写。</div></div><div class="v" id="forecastSalesOut">—</div></div>
+        </div>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -356,8 +372,10 @@ function renderMode(){
   $('salesMain').classList.toggle('is-forecast',isForecast);
   $('salesBadge').classList.toggle('active',isForecast);
   $('salesBadge').textContent=isForecast?'利润基数：驱动预测销售额':'利润基数：实际销售额';
-  $('modeHint').textContent=isForecast?'驱动预测：总销售额 = 新客直购 + 小样转成品 + 老客复购；三项直接进入利润模型。':'实际模式：利润直接使用月净销售额；右侧三条收入只做预测预览，不会重复加到销售额。';
-  $('salesHelper').textContent=isForecast?'当前销售额由右侧三条收入自动计算，不能手动修改。':'实际模式下直接使用 Shopify 月净销售额。';
+  $('modeHint').textContent=isForecast?'驱动预测：总销售额 = 新客直购 + 小样转成品 + 老客复购；三项直接进入利润模型。':'实际模式：利润直接使用月净销售额；下面三条收入只做预测预览，不会重复加到销售额。';
+  $('salesHelper').textContent=isForecast?'当前销售额由展开区的三条收入自动计算，不能手动修改。':'实际模式下直接使用 Shopify 月净销售额。';
+  $('driverSummaryStatus').textContent=isForecast?'当前参与利润':'仅预测预览';
+  $('driverSummaryStatus').classList.toggle('active',isForecast);
 }
 function switchMode(mode){
   if(mode===currentMode)return;
@@ -365,6 +383,7 @@ function switchMode(mode){
   if(mode==='forecast'){
     st.manualSales=D.sales.v;
     currentMode='forecast';
+    $('driverDetails').open=true;
   }else{
     currentMode='actual';
     setVal('sales',st.manualSales??SITE_CONFIG[activeSite].defaults.sales);
@@ -396,6 +415,7 @@ function render(){
   $('sampleRevenueOut').textContent=usd(f.sample);
   $('oldRevenueOut').textContent=usd(f.old);
   $('forecastSalesOut').textContent=usd(f.total);
+  $('driverSummaryAmount').textContent=usd(f.total);
   $('salesRmbSmall').textContent='≈ '+rmb(s.rev);
   $('profitOut').textContent=rmb(s.profit);
   $('profitUsdOut').textContent='≈ '+usd(s.profit/FX);
