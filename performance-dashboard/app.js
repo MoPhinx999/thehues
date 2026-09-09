@@ -110,6 +110,11 @@
     return "缺失";
   }
 
+  function metricSourceName(metricKey, row) {
+    if (["net_sales", "orders", "average_order_value"].includes(metricKey)) return "Shopify Sales";
+    return sourceName(row?.traffic_source);
+  }
+
   function brandName() {
     if (data.brand) return data.brand;
     const title = String(data.title || "");
@@ -389,7 +394,7 @@
 
         const show = (clientX, clientY) => {
           circle.setAttribute("r", String(baseRadius + 2.5));
-          tooltip.innerHTML = `<div class="tooltip-head"><i style="background:${colors[year] || "#555"}"></i><strong>${year} · ${monthNames[month - 1]}</strong></div><span>${metric.label}</span><b>${metric.format(value)}</b><small>${sourceName(row.traffic_source)}${row.period_status === "partial" ? " · 部分月" : ""}</small>`;
+          tooltip.innerHTML = `<div class="tooltip-head"><i style="background:${colors[year] || "#555"}"></i><strong>${year} · ${monthNames[month - 1]}</strong></div><span>${metric.label}</span><b>${metric.format(value)}</b><small>${metricSourceName(metricKey, row)}${row.period_status === "partial" ? " · 部分月" : ""}</small>`;
           tooltip.hidden = false;
           positionTooltip(tooltip, clientX, clientY);
         };
