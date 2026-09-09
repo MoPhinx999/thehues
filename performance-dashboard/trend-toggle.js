@@ -63,18 +63,13 @@
         margin-bottom: 5px;
         border-bottom: 1px solid rgba(255,255,255,.14);
       }
-      .chart-tooltip.is-grouped .tooltip-group-title strong {
-        font-size: 12px;
-      }
+      .chart-tooltip.is-grouped .tooltip-group-title strong { font-size: 12px; }
       .chart-tooltip.is-grouped .tooltip-group-title span {
         color: rgba(255,255,255,.58);
         font-size: 9px;
         white-space: nowrap;
       }
-      .tooltip-compare-list {
-        display: grid;
-        gap: 2px;
-      }
+      .tooltip-compare-list { display: grid; gap: 2px; }
       .tooltip-compare-row {
         display: grid;
         grid-template-columns: 76px 1fr auto;
@@ -186,21 +181,15 @@
   }
 
   function money(value) {
-    return value == null || !Number.isFinite(Number(value))
-      ? "—"
-      : "$" + Number(value).toLocaleString("en-US", { maximumFractionDigits: 0 });
+    return value == null || !Number.isFinite(Number(value)) ? "—" : "$" + Number(value).toLocaleString("en-US", { maximumFractionDigits: 0 });
   }
 
   function integer(value) {
-    return value == null || !Number.isFinite(Number(value))
-      ? "—"
-      : Number(value).toLocaleString("en-US", { maximumFractionDigits: 0 });
+    return value == null || !Number.isFinite(Number(value)) ? "—" : Number(value).toLocaleString("en-US", { maximumFractionDigits: 0 });
   }
 
   function percent(value) {
-    return value == null || !Number.isFinite(Number(value))
-      ? "—"
-      : (Number(value) * 100).toFixed(2) + "%";
+    return value == null || !Number.isFinite(Number(value)) ? "—" : (Number(value) * 100).toFixed(2) + "%";
   }
 
   function effectiveCvr(row) {
@@ -228,7 +217,7 @@
 
   function pointMonth(hit) {
     const label = hit?.getAttribute("aria-label") || "";
-    const match = label.match(/^\d{4}\s+(\d{1,2})月\b/);
+    const match = label.match(/^\d{4}\s+(\d{1,2})月(?:\s|$)/);
     return match ? Number(match[1]) : null;
   }
 
