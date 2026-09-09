@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="data.js" defer></script>
   <script src="app.js" defer></script>
+  <script src="trend-toggle.js" defer></script>
 </head>
 <body>
   <main class="page-shell">
@@ -53,11 +54,11 @@
         <div>
           <span class="section-kicker">Monthly trend</span>
           <h2 id="trendTitle">月度趋势</h2>
-          <p>切换指标，直接比较 2024、2025、2026 相同月份。</p>
+          <p>切换指标；点击 2024 / 2025 / 2026 年份图例，可单独显示或隐藏对应曲线。</p>
         </div>
         <div class="metric-switch" id="metricSwitch" aria-label="选择趋势指标"></div>
       </div>
-      <div class="legend" id="legend"></div>
+      <div class="legend" id="legend" aria-label="点击年份显示或隐藏曲线"></div>
       <div class="chart-frame">
         <svg id="trendChart" viewBox="0 0 1120 390" role="img" aria-labelledby="chartTitle chartDesc">
           <title id="chartTitle">月度趋势图</title>
