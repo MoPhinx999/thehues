@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#163f37">
+  <meta name="description" content="TheHues 2024-2026 YTD site performance dashboard: net sales, orders, AOV, CVR and sessions by month.">
+  <title>TheHues 全站经营数据</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="page-shell">
+    <header class="hero">
+      <div class="hero-main">
+        <div class="eyebrow"><a href="https://thehues.com/">TheHues</a><span>Performance Dashboard</span></div>
+        <h1>全站经营数据</h1>
+        <p class="hero-subtitle">2024–2026 YTD · 净销售额、订单量、AOV、网站 CVR 与 Sessions</p>
+      </div>
+      <div class="hero-meta">
+        <div><span>数据截至</span><strong id="dataThrough">—</strong></div>
+        <div><span>最近同步</span><strong id="syncTime">—</strong></div>
+        <a class="download-link" href="monthly_metrics.csv" download>下载月度 CSV ↓</a>
+      </div>
+    </header>
+
+    <section class="executive" aria-labelledby="executiveTitle">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">Executive view</span>
+          <h2 id="executiveTitle">管理层一页看懂</h2>
+        </div>
+        <p id="executiveRange">—</p>
+      </div>
+      <div class="kpi-grid" id="executiveKpis"></div>
+      <div class="insight-grid" id="insightGrid"></div>
+    </section>
+
+    <section class="annual" aria-labelledby="annualTitle">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">Annual snapshot</span>
+          <h2 id="annualTitle">年度总览</h2>
+        </div>
+        <p>完整年度与 YTD 分开标记；流量口径单独说明。</p>
+      </div>
+      <div class="year-grid" id="yearCards"></div>
+    </section>
+
+    <section class="trend" aria-labelledby="trendTitle">
+      <div class="section-heading trend-heading">
+        <div>
+          <span class="section-kicker">Monthly trend</span>
+          <h2 id="trendTitle">月度趋势</h2>
+          <p>切换指标，直接比较 2024、2025、2026 相同月份。</p>
+        </div>
+        <div class="metric-switch" id="metricSwitch" aria-label="选择趋势指标"></div>
+      </div>
+      <div class="legend" id="legend"></div>
+      <div class="chart-frame">
+        <svg id="trendChart" viewBox="0 0 1120 390" role="img" aria-labelledby="chartTitle chartDesc">
+          <title id="chartTitle">月度趋势图</title>
+          <desc id="chartDesc">2024、2025、2026 三年月度指标对比。</desc>
+        </svg>
+      </div>
+      <p class="chart-note" id="chartNote"></p>
+    </section>
+
+    <section class="monthly" aria-labelledby="monthlyTitle">
+      <div class="section-heading monthly-heading">
+        <div>
+          <span class="section-kicker">Monthly detail</span>
+          <h2 id="monthlyTitle">月度明细</h2>
+          <p>按年份切换查看；每月 5 个核心指标放在同一行。</p>
+        </div>
+        <div class="year-switch" id="yearSwitch" aria-label="选择年份"></div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">月份</th>
+              <th scope="col">净销售额</th>
+              <th scope="col">订单量</th>
+              <th scope="col">AOV</th>
+              <th scope="col">Sessions</th>
+              <th scope="col">网站 CVR</th>
+              <th scope="col">流量口径</th>
+            </tr>
+          </thead>
+          <tbody id="monthlyRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <aside class="method" aria-labelledby="methodTitle">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">Methodology</span>
+          <h2 id="methodTitle">数据口径</h2>
+        </div>
+      </div>
+      <div class="method-grid">
+        <div><strong>销售指标</strong><p>净销售额、订单量、AOV 来自 ShopifyQL Sales，使用店铺报表口径。</p></div>
+        <div><strong>流量指标</strong><p>优先使用 Shopify human sessions 与完成结账会话 CVR；历史缺口由 GA4 补充。</p></div>
+        <div><strong>同比规则</strong><p>销售指标比较完整月份；Sessions / CVR 只比较双方来源一致的 Shopify 月份。</p></div>
+        <div><strong>已知缺口</strong><p>2024 年 1–4 月无可用流量历史，保留为空，不做估算。</p></div>
+      </div>
+      <div class="source-line" id="sourceLine"></div>
+    </aside>
+  </main>
+</body>
+</html>
