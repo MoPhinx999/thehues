@@ -6,28 +6,19 @@
 
   const years = [...data.years].sort((a, b) => a - b);
   const currentYear = Math.max(...years);
-  const colors = { 2024: "#8f948d", 2025: "#b76742", 2026: "#1e5b4f" };
+  const colors = { 2024: "#2563eb", 2025: "#f97316", 2026: "#059669" };
   const monthNames = ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"];
-  const metrics = {
-    net_sales: { label: "净销售额", value: row => row?.net_sales, format: money, axis: compactMoney },
-    orders: { label: "订单量", value: row => row?.orders, format: integer, axis: compact },
-    average_order_value: { label: "AOV", value: row => row?.average_order_value, format: money, axis: compactMoney },
-    conversion_rate: { label: "网站 CVR", value: row => row?.conversion_rate, format: percent, axis: axisPercent },
-    sessions: { label: "Sessions", value: row => row?.sessions, format: integer, axis: compact }
-  };
-
-  const byMonth = new Map(data.months.map(row => [row.month, row]));
 
   function money(value) {
-    return value == null ? "—" : "$" + Number(value).toLocaleString("en-US", { maximumFractionDigits: 0 });
+    return value == null || !Number.isFinite(Number(value)) ? "—" : "$" + Number(value).toLocaleString("en-US", { maximumFractionDigits: 0 });
   }
 
   function integer(value) {
-    return value == null ? "—" : Number(value).toLocaleString("en-US", { maximumFractionDigits: 0 });
+    return value == null || !Number.isFinite(Number(value)) ? "—" : Number(value).toLocaleString("en-US", { maximumFractionDigits: 0 });
   }
 
   function percent(value) {
-    return value == null ? "—" : (Number(value) * 100).toFixed(2) + "%";
+    return value == null || !Number.isFinite(Number(value)) ? "—" : (Number(value) * 100).toFixed(2) + "%";
   }
 
   function signedPercent(value) {
@@ -36,7 +27,7 @@
   }
 
   function compact(value) {
-    if (value == null) return "—";
+    if (value == null || !Number.isFinite(Number(value))) return "—";
     const n = Number(value);
     if (Math.abs(n) >= 1e6) return (n / 1e6).toFixed(1) + "m";
     if (Math.abs(n) >= 1e3) return (n / 1e3).toFixed(Math.abs(n) >= 1e5 ? 0 : 1) + "k";
@@ -44,7 +35,28 @@
   }
 
   function compactMoney(value) { return value == null ? "—" : "$" + compact(value); }
-  function axisPercent(value) { return value == null ? "—" : (Number(value) * 100).toFixed(1) + "%"; }
+  function axisPercent(value) { return value == null ? "—" : (Number(value) * 100).toFixed(2).replace(/0+$/, "").replace(/\.$/, "") + "%"; }
+
+  function effectiveCvr(row) {
+    if (!row) return null;
+    const sessions = Number(row.sessions);
+    const conversions = Number(row.conversion_sessions);
+    if (row.sessions != null && row.conversion_sessions != null && Number.isFinite(sessions) && sessions > 0 && Number.isFinite(conversions)) {
+      return conversions / sessions;
+    }
+    const supplied = Number(row.conversion_rate);
+    return row.conversion_rate != null && Number.isFinite(supplied) ? supplied : null;
+  }
+
+  const metrics = {
+    net_sales: { label: "净销售额", value: row => row?.net_sales, format: money, axis: compactMoney },
+    orders: { label: "订单量", value: row => row?.orders, format: integer, axis: compact },
+    average_order_value: { label: "AOV", value: row => row?.average_order_value, format: money, axis: compactMoney },
+    conversion_rate: { label: "网站 CVR", value: effectiveCvr, format: percent, axis: axisPercent },
+    sessions: { label: "Sessions", value: row => row?.sessions, format: integer, axis: compact }
+  };
+
+  const byMonth = new Map(data.months.map(row => [row.month, row]));
 
   function rowFor(year, month) {
     return byMonth.get(`${year}-${String(month).padStart(2, "0")}`);
@@ -64,16 +76,25 @@
   function aggregate(rows) {
     const sales = rows.reduce((sum, row) => sum + (Number(row.net_sales) || 0), 0);
     const orders = rows.reduce((sum, row) => sum + (Number(row.orders) || 0), 0);
-    const trafficRows = rows.filter(row => row.sessions != null);
-    const sessions = trafficRows.reduce((sum, row) => sum + (Number(row.sessions) || 0), 0);
-    const conversions = trafficRows.reduce((sum, row) => sum + (Number(row.conversion_sessions) || 0), 0);
+
+    const aovRows = rows.filter(row => row.average_order_value != null && Number.isFinite(Number(row.average_order_value)) && Number(row.orders) > 0);
+    const aovOrders = aovRows.reduce((sum, row) => sum + Number(row.orders), 0);
+    const weightedAov = aovRows.reduce((sum, row) => sum + Number(row.average_order_value) * Number(row.orders), 0);
+
+    const trafficRows = rows.filter(row => row.sessions != null && Number.isFinite(Number(row.sessions)));
+    const sessions = trafficRows.reduce((sum, row) => sum + Number(row.sessions), 0);
+    const cvrRows = trafficRows.filter(row => row.conversion_sessions != null && Number.isFinite(Number(row.conversion_sessions)));
+    const cvrSessions = cvrRows.reduce((sum, row) => sum + Number(row.sessions), 0);
+    const conversions = cvrRows.reduce((sum, row) => sum + Number(row.conversion_sessions), 0);
+
     return {
       net_sales: sales,
       orders,
-      average_order_value: orders ? sales / orders : null,
+      average_order_value: aovOrders ? weightedAov / aovOrders : null,
       sessions: trafficRows.length ? sessions : null,
-      conversion_rate: trafficRows.length && sessions ? conversions / sessions : null,
+      conversion_rate: cvrRows.length && cvrSessions ? conversions / cvrSessions : null,
       traffic_months: trafficRows.length,
+      cvr_months: cvrRows.length,
       months: rows.length
     };
   }
@@ -89,7 +110,21 @@
     return "缺失";
   }
 
+  function brandName() {
+    if (data.brand) return data.brand;
+    const title = String(data.title || "");
+    const match = title.match(/^(.+?)\s+monthly performance/i);
+    return match ? match[1] : "Store";
+  }
+
   function renderHeader() {
+    const brand = brandName();
+    const brandLink = document.querySelector(".eyebrow a");
+    if (brandLink) {
+      brandLink.textContent = brand;
+      if (data.homepage) brandLink.href = data.homepage;
+    }
+    document.title = `${brand} 全站经营数据`;
     document.getElementById("dataThrough").textContent = data.data_through || "—";
     const stamp = new Date(data.synced_at);
     document.getElementById("syncTime").textContent = Number.isNaN(stamp.getTime())
@@ -103,10 +138,11 @@
       const current = rowFor(year, month);
       const previous = rowFor(previousYear, month);
       if (!current || !previous) continue;
-      const sameShopifyBasis = current.period_status === "complete" && previous.period_status === "complete"
-        && current.traffic_source === "shopifyql_human_sessions"
-        && previous.traffic_source === "shopifyql_human_sessions";
-      if (sameShopifyBasis) months.push(month);
+      const comparable = current.period_status === "complete" && previous.period_status === "complete"
+        && current.sessions != null && previous.sessions != null
+        && current.traffic_source === previous.traffic_source
+        && current.traffic_source !== "unavailable";
+      if (comparable) months.push(month);
     }
     return months;
   }
@@ -114,7 +150,34 @@
   function formatMonthRange(months) {
     if (!months.length) return "无同口径月份";
     if (months.length === 1) return `${months[0]}月`;
-    return `${months[0]}–${months[months.length - 1]}月`;
+    const contiguous = months.every((month, index) => index === 0 || month === months[index - 1] + 1);
+    return contiguous ? `${months[0]}–${months[months.length - 1]}月` : months.map(month => `${month}月`).join("、");
+  }
+
+  function performanceInsight(salesDelta, ordersDelta, aovDelta, completeThrough, previousYear) {
+    let title;
+    if (salesDelta == null) title = "销售同比暂无完整口径。";
+    else if (salesDelta >= 0) {
+      if ((ordersDelta ?? 0) >= 0 && (aovDelta ?? 0) >= 0) title = "订单与 AOV 共同推动增长。";
+      else if ((ordersDelta ?? 0) >= 0 && (aovDelta ?? 0) < 0) title = "增长主要来自订单规模。";
+      else if ((ordersDelta ?? 0) < 0 && (aovDelta ?? 0) >= 0) title = "增长主要由 AOV 提升支撑。";
+      else title = "销售额保持增长。";
+    } else {
+      if ((ordersDelta ?? 0) < 0 && (aovDelta ?? 0) >= 0) title = "AOV 提升未完全抵消订单下降。";
+      else if ((ordersDelta ?? 0) >= 0 && (aovDelta ?? 0) < 0) title = "订单增长未完全抵消 AOV 下滑。";
+      else title = "销售额同比承压。";
+    }
+    return `<strong>${title}</strong><span>${currentYear} 1–${completeThrough}月 vs ${previousYear}：净销售额 ${signedPercent(salesDelta)}，订单量 ${signedPercent(ordersDelta)}，AOV ${signedPercent(aovDelta)}。</span>`;
+  }
+
+  function trafficInsight(sessionsDelta, cvrDelta, trafficMonths, previousTraffic, currentTraffic) {
+    let title;
+    if (sessionsDelta == null || cvrDelta == null) title = "流量或 CVR 暂无完整可比口径。";
+    else if (sessionsDelta >= 0 && cvrDelta >= 0) title = "流量与转化同步改善。";
+    else if (sessionsDelta < 0 && cvrDelta < 0) title = "流量与转化均承压。";
+    else if (sessionsDelta < 0 && cvrDelta >= 0) title = "转化改善，但流量下降。";
+    else title = "流量增长，但转化效率下降。";
+    return `<strong>${title}</strong><span>同口径 ${formatMonthRange(trafficMonths)} Sessions ${signedPercent(sessionsDelta)}；CVR 从 ${percent(previousTraffic.conversion_rate)} 到 ${percent(currentTraffic.conversion_rate)}（${signedPercent(cvrDelta)}）。</span>`;
   }
 
   function renderExecutive() {
@@ -143,9 +206,9 @@
     const kpis = [
       { label: `${currentYear} YTD 净销售额`, value: money(currentYtd.net_sales), delta: signedPercent(salesDelta), note: `同比：${currentYear} 1–${completeThrough}月 vs ${previousYear} 1–${completeThrough}月`, tone: salesDelta },
       { label: `${currentYear} YTD 订单量`, value: integer(currentYtd.orders), delta: signedPercent(ordersDelta), note: `同比：${currentYear} 1–${completeThrough}月 vs ${previousYear} 1–${completeThrough}月`, tone: ordersDelta },
-      { label: `${currentYear} YTD AOV`, value: money(currentYtd.average_order_value), delta: signedPercent(aovDelta), note: `同比：${currentYear} 1–${completeThrough}月 vs ${previousYear} 1–${completeThrough}月`, tone: aovDelta },
+      { label: `${currentYear} YTD AOV`, value: money(currentYtd.average_order_value), delta: signedPercent(aovDelta), note: `AOV 按月度 Shopify AOV × 订单量加权`, tone: aovDelta },
       { label: `${currentYear} YTD Sessions`, value: integer(currentYtd.sessions), delta: signedPercent(sessionsDelta), note: `流量同比仅用同口径 ${formatMonthRange(trafficMonths)}`, tone: sessionsDelta },
-      { label: `${currentYear} YTD 网站 CVR`, value: percent(currentYtd.conversion_rate), delta: signedPercent(cvrDelta), note: `CVR 同比仅用同口径 ${formatMonthRange(trafficMonths)}`, tone: cvrDelta }
+      { label: `${currentYear} YTD 网站 CVR`, value: percent(currentYtd.conversion_rate), delta: signedPercent(cvrDelta), note: `CVR = conversion sessions ÷ Sessions`, tone: cvrDelta }
     ];
 
     document.getElementById("executiveKpis").innerHTML = kpis.map(item => {
@@ -157,11 +220,11 @@
       </article>`;
     }).join("");
 
-    const full2024 = data.summaries.find(item => item.year === 2024);
-    const share2024 = full2024?.net_sales ? currentYtd.net_sales / full2024.net_sales : null;
+    const full2024 = aggregate(rowsFor(2024));
+    const share2024 = full2024.net_sales ? currentYtd.net_sales / full2024.net_sales : null;
     const insights = [
-      `<strong>增长来自订单规模。</strong><span>${currentYear} 1–${completeThrough}月净销售额同比 ${signedPercent(salesDelta)}，订单量同比 ${signedPercent(ordersDelta)}；同期 AOV ${signedPercent(aovDelta)}。</span>`,
-      `<strong>流量与转化同步改善。</strong><span>同口径 ${formatMonthRange(trafficMonths)} Sessions 同比 ${signedPercent(sessionsDelta)}；CVR 从 ${percent(previousTraffic.conversion_rate)} 升至 ${percent(currentTraffic.conversion_rate)}（${signedPercent(cvrDelta)}）。</span>`,
+      performanceInsight(salesDelta, ordersDelta, aovDelta, completeThrough, previousYear),
+      trafficInsight(sessionsDelta, cvrDelta, trafficMonths, previousTraffic, currentTraffic),
       currentPartial
         ? `<strong>${Number(currentPartial.month.slice(5, 7))}月仍是部分月。</strong><span>截至 ${data.data_through}：净销售额 ${money(currentPartial.net_sales)}，${integer(currentPartial.orders)} 单，AOV ${money(currentPartial.average_order_value)}；不纳入完整月同比。</span>`
         : `<strong>当前月份已完整。</strong><span>所有已展示月份均可进入完整月同比。</span>`,
@@ -174,26 +237,28 @@
 
   function trafficCoverage(summary) {
     const rows = rowsFor(summary.year);
-    const sources = [...new Set(rows.filter(row => row.sessions != null).map(row => row.traffic_source))];
-    if (!summary.traffic_months) return "无可用流量数据";
-    if (sources.length > 1) return `流量覆盖 ${summary.traffic_months}/${summary.months} 月 · 混合口径`;
-    if (summary.traffic_months !== summary.months) return `流量覆盖 ${summary.traffic_months}/${summary.months} 月 · ${sourceName(sources[0])}`;
-    return `流量覆盖 ${summary.traffic_months}/${summary.months} 月 · ${sourceName(sources[0])}`;
+    const trafficRows = rows.filter(row => row.sessions != null);
+    const sources = [...new Set(trafficRows.map(row => row.traffic_source))];
+    if (!trafficRows.length) return "无可用流量数据";
+    if (sources.length > 1) return `流量覆盖 ${trafficRows.length}/${rows.length} 月 · 混合口径`;
+    return `流量覆盖 ${trafficRows.length}/${rows.length} 月 · ${sourceName(sources[0])}`;
   }
 
   function renderYearCards() {
     document.getElementById("yearCards").innerHTML = data.summaries.map(summary => {
       const status = summary.partial ? `YTD · 截至 ${data.data_through}` : "完整年度";
+      const computed = aggregate(rowsFor(summary.year));
+      const mixedSources = new Set(rowsFor(summary.year).filter(row => row.sessions != null).map(row => row.traffic_source)).size > 1;
       return `<article class="year-card ${summary.partial ? "partial" : ""}">
         <div class="year-head"><h3>${summary.year}</h3><span>${status}</span></div>
-        <div class="year-sales"><span>净销售额</span><strong>${money(summary.net_sales)}</strong></div>
+        <div class="year-sales"><span>净销售额</span><strong>${money(summary.net_sales ?? computed.net_sales)}</strong></div>
         <div class="year-metrics">
-          <div><span>订单量</span><strong>${integer(summary.orders)}</strong></div>
-          <div><span>AOV</span><strong>${money(summary.aov)}</strong></div>
-          <div><span>Sessions*</span><strong>${integer(summary.sessions)}</strong></div>
-          <div><span>网站 CVR*</span><strong>${percent(summary.conversion_rate)}</strong></div>
+          <div><span>订单量</span><strong>${integer(summary.orders ?? computed.orders)}</strong></div>
+          <div><span>AOV</span><strong>${money(computed.average_order_value)}</strong></div>
+          <div><span>Sessions*</span><strong>${integer(computed.sessions)}</strong></div>
+          <div><span>网站 CVR*</span><strong>${percent(computed.conversion_rate)}</strong></div>
         </div>
-        <p class="coverage">${trafficCoverage(summary)}${summary.year !== currentYear ? "；跨来源年度流量不用于管理层同比" : ""}</p>
+        <p class="coverage">${trafficCoverage(summary)}${mixedSources ? "；跨来源年度流量不用于管理层同比" : ""}</p>
       </article>`;
     }).join("");
   }
@@ -203,6 +268,43 @@
     Object.entries(attrs).forEach(([key, value]) => element.setAttribute(key, String(value)));
     if (text) element.textContent = text;
     return element;
+  }
+
+  function ensureTooltip() {
+    let tooltip = document.getElementById("trendTooltip");
+    if (!tooltip) {
+      tooltip = document.createElement("div");
+      tooltip.id = "trendTooltip";
+      tooltip.className = "chart-tooltip";
+      tooltip.hidden = true;
+      document.body.appendChild(tooltip);
+    }
+    return tooltip;
+  }
+
+  function positionTooltip(tooltip, clientX, clientY) {
+    const gap = 14;
+    const pad = 10;
+    tooltip.style.left = `${clientX + gap}px`;
+    tooltip.style.top = `${clientY + gap}px`;
+    const rect = tooltip.getBoundingClientRect();
+    let left = clientX + gap;
+    let top = clientY + gap;
+    if (rect.right > window.innerWidth - pad) left = clientX - rect.width - gap;
+    if (rect.bottom > window.innerHeight - pad) top = clientY - rect.height - gap;
+    tooltip.style.left = `${Math.max(pad, left)}px`;
+    tooltip.style.top = `${Math.max(pad, top)}px`;
+  }
+
+  function chartTrafficNote() {
+    const trafficRows = data.months.filter(row => row.sessions != null);
+    const sources = [...new Set(trafficRows.map(row => row.traffic_source))];
+    const missing = data.months.filter(row => row.sessions == null).map(row => row.month);
+    if (sources.length === 1 && sources[0] === "shopifyql_human_sessions") {
+      return `Sessions 与 CVR 均为 Shopify human sessions 口径；CVR = conversion sessions ÷ Sessions。${missing.length ? `缺失 ${missing.length} 个月流量数据。` : ""}`;
+    }
+    const sourceText = sources.map(sourceName).join(" + ");
+    return `Sessions / CVR 使用 ${sourceText || "可用来源"}；CVR = conversion sessions ÷ Sessions。${missing.length ? `另有 ${missing.length} 个月流量缺失。` : ""}跨来源折线可看趋势，不做严格同比。`;
   }
 
   function renderChart(metricKey) {
@@ -218,8 +320,9 @@
     const pad = { left: 78, right: 30, top: 34, bottom: 48 };
     const innerWidth = width - pad.left - pad.right;
     const innerHeight = height - pad.top - pad.bottom;
-    const values = data.months.map(metric.value).filter(value => value != null).map(Number);
-    const max = Math.max(...values, 1) * 1.08;
+    const values = data.months.map(metric.value).filter(value => value != null && Number.isFinite(Number(value))).map(Number);
+    const maxValue = values.length ? Math.max(...values) : 0;
+    const max = maxValue > 0 ? maxValue * 1.12 : 1;
     const x = month => pad.left + (month - 1) * innerWidth / 11;
     const y = value => pad.top + innerHeight - Number(value) / max * innerHeight;
 
@@ -232,6 +335,9 @@
     monthNames.forEach((name, index) => {
       svg.appendChild(svgEl("text", { x: x(index + 1), y: height - 16, "text-anchor": "middle", class: "axis-text" }, name));
     });
+
+    const tooltip = ensureTooltip();
+    tooltip.hidden = true;
 
     years.forEach(year => {
       let segment = [];
@@ -249,14 +355,13 @@
       for (let month = 1; month <= 12; month += 1) {
         const row = rowFor(year, month);
         const value = metric.value(row);
-        if (value == null) {
+        if (value == null || !Number.isFinite(Number(value))) {
           if (segment.length) drawSegment();
           previousMonth = null;
           continue;
         }
         if (previousMonth != null && month !== previousMonth + 1) drawSegment();
-        const point = { month, value: Number(value), row };
-        segment.push(point);
+        segment.push({ month, value: Number(value), row });
         previousMonth = month;
       }
       drawSegment();
@@ -264,20 +369,50 @@
       for (let month = 1; month <= 12; month += 1) {
         const row = rowFor(year, month);
         const value = metric.value(row);
-        if (value == null) continue;
+        if (value == null || !Number.isFinite(Number(value))) continue;
+        const pointX = x(month);
+        const pointY = y(Number(value));
+        const baseRadius = row.period_status === "partial" ? 5.5 : 4.5;
         const circle = svgEl("circle", {
-          cx: x(month), cy: y(Number(value)), r: row.period_status === "partial" ? 5 : 4,
+          cx: pointX, cy: pointY, r: baseRadius,
           class: "trend-point", stroke: colors[year] || "#555",
-          fill: row.period_status === "partial" ? "#f5f6f4" : (colors[year] || "#555"), tabindex: "0"
+          fill: row.period_status === "partial" ? "#ffffff" : (colors[year] || "#555")
         });
-        circle.appendChild(svgEl("title", {}, `${year} ${monthNames[month - 1]} · ${metric.label} ${metric.format(value)}${row.period_status === "partial" ? "（部分月）" : ""}`));
         svg.appendChild(circle);
+
+        const hit = svgEl("circle", {
+          cx: pointX, cy: pointY, r: 13,
+          class: "trend-hit", fill: "transparent", tabindex: "0",
+          role: "button",
+          "aria-label": `${year} ${monthNames[month - 1]} ${metric.label} ${metric.format(value)}`
+        });
+
+        const show = (clientX, clientY) => {
+          circle.setAttribute("r", String(baseRadius + 2.5));
+          tooltip.innerHTML = `<div class="tooltip-head"><i style="background:${colors[year] || "#555"}"></i><strong>${year} · ${monthNames[month - 1]}</strong></div><span>${metric.label}</span><b>${metric.format(value)}</b><small>${sourceName(row.traffic_source)}${row.period_status === "partial" ? " · 部分月" : ""}</small>`;
+          tooltip.hidden = false;
+          positionTooltip(tooltip, clientX, clientY);
+        };
+        const hide = () => {
+          circle.setAttribute("r", String(baseRadius));
+          tooltip.hidden = true;
+        };
+
+        hit.addEventListener("mouseenter", event => show(event.clientX, event.clientY));
+        hit.addEventListener("mousemove", event => positionTooltip(tooltip, event.clientX, event.clientY));
+        hit.addEventListener("mouseleave", hide);
+        hit.addEventListener("focus", () => {
+          const rect = hit.getBoundingClientRect();
+          show(rect.left + rect.width / 2, rect.top + rect.height / 2);
+        });
+        hit.addEventListener("blur", hide);
+        svg.appendChild(hit);
       }
     });
 
     const note = metricKey === "sessions" || metricKey === "conversion_rate"
-      ? "注意：2024 年 1–4 月流量缺失；2024 年 5 月–2025 年 4 月为 GA4 补充，2025 年 5 月起为 Shopify。跨来源折线可看趋势，不做严格同比。"
-      : "销售、订单与 AOV 均为 ShopifyQL 销售口径；2026 年 9 月为部分月。";
+      ? chartTrafficNote()
+      : `销售、订单与 AOV 均为 ShopifyQL 销售口径；${currentYear} 年当前未结束月份以空心点标记。`;
     document.getElementById("chartNote").textContent = note;
   }
 
@@ -315,7 +450,7 @@
         <td>${integer(row.orders)}</td>
         <td>${money(row.average_order_value)}</td>
         <td>${integer(row.sessions)}</td>
-        <td>${percent(row.conversion_rate)}</td>
+        <td>${percent(effectiveCvr(row))}</td>
         <td><span class="source-badge ${row.traffic_source === "shopifyql_human_sessions" ? "shopify" : row.traffic_source === "ga4_purchase_sessions" ? "ga4" : "missing"}">${sourceName(row.traffic_source)}</span></td>
       </tr>`);
     }
@@ -324,6 +459,7 @@
 
   function renderYearSwitch() {
     const switcher = document.getElementById("yearSwitch");
+    switcher.innerHTML = "";
     years.forEach(year => {
       const button = document.createElement("button");
       button.type = "button";
@@ -339,7 +475,7 @@
   }
 
   function renderSources() {
-    document.getElementById("sourceLine").textContent = `Shopify 报表时区：${data.shopify_timezone || "未记录"}；GA4 时区：${data.ga4_timezone || "未记录"}。数据文件更新时间：${data.synced_at || "未记录"}。保持 data.js 与 monthly_metrics.csv 更新即可刷新此看板，无需改页面代码。`;
+    document.getElementById("sourceLine").textContent = `Shopify 报表时区：${data.shopify_timezone || "未记录"}；GA4 时区：${data.ga4_timezone || "未记录"}。数据文件更新时间：${data.synced_at || "未记录"}。CVR 优先由 conversion sessions ÷ Sessions 实时计算；只需更新 data.js 与 monthly_metrics.csv 即可刷新看板。`;
   }
 
   renderHeader();
