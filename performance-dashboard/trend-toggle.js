@@ -13,6 +13,18 @@
   const hiddenYears = new Set();
   let applyFrame = null;
 
+  function normalizeWording(root = document.body) {
+    if (!root) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!node.nodeValue) continue;
+      let text = node.nodeValue;
+      text = text.replaceAll("管理层同比", "严格同比").replaceAll("管理层", "");
+      if (text !== node.nodeValue) node.nodeValue = text;
+    }
+  }
+
   function injectStyles() {
     if (document.getElementById("yearToggleStyles")) return;
     const style = document.createElement("style");
@@ -104,6 +116,7 @@
     updateLegendState();
   }
 
+  normalizeWording();
   injectStyles();
   bindLegend();
   applyVisibility();
